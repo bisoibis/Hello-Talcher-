@@ -1,0 +1,2042 @@
+<!DOCTYPE  lang="en">
+<head>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hello Talcher</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f4f4f4;
+      color: #333;
+    }
+    header {
+      background: linear-gradient(90deg, #f97316, #facc15);
+      padding: 15px 30px;
+      width: 100%;
+      max-width: 100%;
+      display: flex;
+      align-items: center;
+      position: fixed;
+      justify-content: space-between;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      z-index: 10;
+    }
+    .logo {
+      display: flex; align-items: center;
+    }
+    .logo img {
+      height: 50px; 
+      width: 60px;
+      margin-right: 15px;
+      border-radius: 50%; border: 2px solid #fff;
+    }
+    .logo-text {
+      font-size: 26px; font-weight: 700;
+      color: #fff; text-shadow: 1px 1px 4px #00000055;
+    }.menu-toggle {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  width: 40px;
+  height: 36px;
+  justify-content: center;
+  z-index: 15;
+}
+.menu-toggle span {
+  height: 6px;
+  width: 36px;
+  background: #fff;
+  margin: 5px 0;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+.menu-toggle.active span:nth-child(1) {
+  transform: rotate(45deg) translate(8px, 8px);
+}
+.menu-toggle.active span:nth-child(2) {
+  opacity: 0;
+}
+.menu-toggle.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(8px, -8px);
+}
+
+nav {
+  display: flex; gap: 20px;
+}
+nav a {
+  color: #fff; text-decoration: none;
+  font-weight: 600; padding: 8px 12px;
+  border-radius: 8px; transition: background 0.3s;
+}
+nav a:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+@media (max-width: 768px) {
+  .menu-toggle { display: flex; }
+  nav {
+    position: fixed;
+    top: 0; right: -250px;
+    height: 100%; width: 250px;
+    background: #f97316;
+    padding: 40px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    transition: right 0.3s ease;
+  }
+  nav.active {
+    right: 0;
+  }
+}
+
+.hero {
+  height: 60vh;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  color: #fff;
+}
+.slides {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  margin-top:  20px;
+  position: absolute;
+  top: 0; left: 0;
+  transition: transform 1s ease-in-out;
+}
+p {
+  font-family: 'Arial Black', Gadget, sans-serif;
+  color: #b0781a; /* darker golden amber */
+  text-shadow: 1px 1px 3px rgba(176, 120, 26, 0.6); /* stronger, darker shadow */
+  transition: color 0.3s ease;
+}
+
+p:hover {
+  color: #c29225; /* slightly brighter on hover */
+  text-shadow: 1px 1px 4px rgba(194, 146, 37, 0.7);
+}
+
+li {
+  font-family: 'Verdana', Geneva, Tahoma, sans-serif;
+  color: #a35e00; /* darker burnt orange */
+  text-shadow: 1px 1px 2px rgba(163, 94, 0, 0.6);
+  transition: color 0.3s ease;
+}
+
+li:hover {
+  color: #b97800; /* a bit lighter on hover */
+  text-shadow: 1px 1px 3px rgba(185, 120, 0, 0.7);
+}
+.slide {
+  min-width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+.slide::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+}
+.hero-content {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
+.hero-content h1 {
+  font-size: 36px;
+  margin-bottom: 10px;
+  color: #fff;
+}
+.hero-content p {
+  font-size: 20px;
+  color: #eee;
+}
+.slide-controls {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  display: flex;
+  gap: 10px;
+}
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #ddd;
+  cursor: pointer;
+}
+.dot.active {
+  background: #fff;
+}
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 30px;
+  background: rgba(0,0,0,0.4);
+  color: white;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 3;
+}
+.arrow.left { left: 10px; }
+.arrow.right { right: 10px; }
+
+.section {
+  padding: 40px 30px;
+  background: #ffffff;
+  margin: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+.section h2 {
+  font-size: 28px;
+  color: #333;
+  margin-bottom: 20px;
+}
+footer {
+  background: #222;
+  color: #fff;
+  text-align: center;
+  padding: 10px;
+  margin-top: 40px;
+  font-size: 14px;
+}
+.weather-card {
+  width: 90%;
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  animation: fadeInUp 1s ease;
+  transition: transform 0.3s ease;
+}
+
+/* Larger card for desktops */
+@media (min-width: 1024px) {
+  .weather-card {
+    max-width: 800px;
+    padding: 30px;
+  }
+}
+.weather-card:hover {
+    transform: scale(1.03);
+  }
+
+  .weather-card h2 {
+    color: #fff;
+    margin-bottom: 12px;
+    font-family: 'Segoe UI', sans-serif;
+    font-weight: 600;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+.talcher-box {
+    max-width: 100%;
+    margin: 20px auto;
+    font-family: 'Poppins', sans-serif;
+    border: 2px solid #d0d0d0;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+    background-color: #fdfdfd;
+  }
+
+  .talcher-header {
+    background: linear-gradient(to right, #a6c0fe, #f68084);
+    color: #fff;
+    padding: 12px;
+    text-align: center;
+    font-size: 22px;
+    font-weight: 600;
+  }
+
+  .talcher-period {
+    background-color: #fafafa;
+    padding: 6px;
+    text-align: center;
+    font-weight: 500;
+    font-size: 16px;
+    color: #444;
+  }
+
+  .talcher-img-box {
+    text-align: center;
+    padding: 10px;
+  }
+
+  .talcher-img-box img {
+    max-width: 100%;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+  }
+
+  .talcher-section {
+    padding: 12px 16px;
+    font-size: 15px;
+    color: #333;
+  }
+
+  .talcher-section strong {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 16px;
+    color: #222;
+  }
+
+  .talcher-section ul {
+    padding-left: 20px;
+    margin: 0 0 12px;
+  }
+
+  .talcher-section li {
+    margin-bottom: 6px;
+  }
+
+  .talcher-footer {
+    text-align: center;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: 500;
+    border-top: 1px solid #ddd;
+    background-color: #f3f3f3;
+.king-card {
+    max-width: 300px;
+    margin: 30px auto;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    background-color: #fff;
+  }
+
+  .king-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .king-card .caption {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    text-align: center;
+    padding: 10px 0;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+  }
+
+  @media (min-width: 768px) {
+    .king-card {
+      max-width: 350px;
+    }
+
+    .king-card img {
+      height: 250px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .king-card {
+      max-width: 400px;
+    }
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  .animate-fade-in {
+    animation: fade-in 1.2s ease-in-out forwards;
+  }
+
+  @keyframes slide-in-left {
+    from { transform: translateX(-60px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  }
+  .animate-slide-in-left {
+    animation: slide-in-left 1.3s ease-out forwards;
+  }
+
+  @keyframes slide-in-right {
+    from { transform: translateX(60px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  }
+  .animate-slide-in-right {
+    animation: slide-in-right 1.3s ease-out forwards;
+  }
+
+  @keyframes slide-in-up {
+    from { transform: translateY(30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  .animate-slide-in-up {
+    animation: slide-in-up 1.2s ease-out forwards;
+  }
+#about-talcher {
+  position: relative;
+  z-index: 1;
+}
+
+  </style>
+</head>
+<body class="min-h-screen text-gray-800 " style="background: linear-gradient(to bottom right, #ff914d, #ffc107);">
+  <header>
+    <div class="logo">
+      <img src="hellotalcher.png" alt="Hello Talcher  Logo">
+      <div class="logo-text">Hello Talcher </div>
+    </div>
+    <div class="menu-toggle" onclick="toggleMenu(this)">
+      <span></span><span></span><span></span>
+    </div>
+    <nav id="menu">
+       <a href="#about-talcher" > Home </a>
+      <a href="#contact">Contact </a>
+     <a href="#history">History</a>
+     <a href="#places">Places</a>
+     <a href="#Hotels">Hotel</a>
+     <a href="#education">Education</a>
+      <a href="#Hospitals">Hospital</a>
+     <a href="#upcoming-projects">Upcoming Project</a>
+     <a href="#plants">Plants</a>
+    </nav>
+  </header>
+
+  <section class="hero" id="heros">
+    <div class="slides" id="slides">
+      <div class="slide" style="background-image: url('rajbati.jpg')">
+        <div class="hero-content">
+          <h1>Discover the Spirit of Talcher</h1>
+          <p>Explore Rajbati – the royal heritage of Talcher.</p>
+        </div>
+      </div>
+      <div class="slide" style="background-image: url('hingula.jpg')">
+        <div class="hero-content">
+          <h1>Feel the Power of Faith</h1>
+          <p>Visit the famous Hingula Temple and join its spiritual aura.</p>
+        </div>
+      </div>
+      <div class="slide" style="background-image: url('coal.jpeg')">
+        <div class="hero-content">
+          <h1>Power Capital of Odisha</h1>
+          <p>Talcher – known for coal, energy, and industrial growth.</p>
+        </div>
+      </div>
+      <div class="slide" style="background-image: url('brahmani.png')">
+        <div class="hero-content">
+          <h1>Nature and Beauty</h1>
+          <p>Experience the serenity of the Brahmani River.</p>
+        </div>
+      </div>
+    </div>
+    <div class="arrow left" onclick="prevSlide()">&#10094;</div>
+    <div class="arrow right" onclick="nextSlide()">&#10095;</div>
+    <div class="slide-controls" id="dots"></div>
+ </section>
+ <div class="weather-card">
+<h2 class="text-3xl font-extrabold text-indigo-700 tracking-wide mb-4 select-none">
+  Talcher Live Weather
+</h2>
+<div id="temp" class="text-6xl font-semibold text-red-600 flex items-center justify-center space-x-4 select-none">
+  <span class="loading animate-pulse text-gray-400">Loading...</span>
+</div>
+ </div>
+<!-- About Talcher Section -->
+<section class="relative bg-cover bg-center bg-no-repeat  px-4 sm:px-6 lg:px-16 text-white pt-36 scroll-mt-28"
+  id="about-talcher"
+  style="background-image: url('talcher palace.jpg');"
+>
+  <div class="absolute inset-0 bg-black/70 backdrop-blur-sm z-0"></div>
+
+  <div class="relative z-1 max-w-7xl mx-auto">
+    <h2 class="text-4xl md:text-5xl font-extrabold text-center mb-14 text-yellow-300 drop-shadow animate-fade-in">
+      Discover Talcher
+    </h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-14 items-start">
+      <div class="text-lg font-medium leading-relaxed animate-slide-in-right space-y-6">
+        <div>
+          <p class="text-yellow-200 font-semibold">Location:</p>
+          <p>
+            Talcher is a growing town in Angul district of Odisha, situated on the Brahmani River, around
+            <strong>127 km from Bhubaneswar</strong> and <strong>20 km from Angul</strong>.
+          </p>
+        </div>
+
+        <div>
+          <p class="text-yellow-200 font-semibold">Geography & Climate:</p>
+          <p>
+            It lies at an altitude of <strong>65m (213 ft)</strong> and is surrounded by green hills and dense coal reserves.
+            The region experiences a tropical climate with hot summers and mild winters.
+          </p>
+        </div>
+
+        <div>
+          <p class="text-yellow-200 font-semibold">Quick Facts:</p>
+          <ul class="list-disc list-inside space-y-1">
+            <li><strong>Area:</strong> 31.7 sq. km</li>
+            <li><strong>Population (2011):</strong> 41,933</li>
+            <li><strong>PIN Code:</strong> 759100</li>
+            <li><strong>STD Code:</strong> 06760</li>
+            <li><strong>Languages:</strong> Odia, Hindi, English</li>
+            <li><strong>Coordinates:</strong> 20.95°N, 85.23°E</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="w-full animate-slide-in-left">
+        <iframe
+          class="w-full h-[300px] sm:h-[400px] rounded-2xl shadow-2xl border-4 border-yellow-300"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3813.936716658881!2d85.22889067474387!3d20.949987081627222!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a1b3e2955555555%3A0x1ec5b7f0f48f4e5c!2sTalcher%2C%20Odisha!5e0!3m2!1sen!2sin!4v1652609234555!5m2!1sen!2sin"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Ministers of Talcher Section -->
+<section class="bg-gray-100 py-20 px-4 sm:px-6 lg:px-16" id="ministers">
+  <div class="max-w-7xl mx-auto text-center">
+    <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-14">Administrative & Political Leaders
+ of Talcher</h2>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+      <!-- Minister 1 -->
+      <div class="bg-white rounded-2xl shadow-md p-6 text-center hover:shadow-xl transition duration-300">
+        <img src="Braja_Kishore_Pradhan.jpg" alt="Brajakishore Pradhan" class="w-32 h-32 mx-auto rounded-full shadow mb-4 object-cover">
+        <h3 class="text-xl font-semibold text-gray-800">Brajakishore Pradhan</h3>
+        <p class="text-sm text-gray-600">MLA, Talcher Constituency</p>
+      </div>
+
+      <!-- Minister 2 -->
+      <div class="bg-white rounded-2xl shadow-md p-6 text-center hover:shadow-xl transition duration-300">
+        <img src="samir_kumar_jena.jpeg" alt="Dilip Kumar Ray" class="w-32 h-32 mx-auto rounded-full shadow mb-4 object-cover">
+        <h3 class="text-xl font-semibold text-gray-800">Samir Kumar Jena</h3>
+        <p class="text-sm text-gray-600">Sub-collector of Talcher</p>
+      </div>
+
+      <!-- Minister 3 -->
+      <div class="bg-white rounded-2xl shadow-md p-6 text-center hover:shadow-xl transition duration-300">
+        <img src="dharmenrdra_pradhan.webp" alt="Padmanav Behera" class="w-32 h-32 mx-auto rounded-full shadow mb-4 object-cover">
+        <h3 class="text-xl font-semibold text-gray-800">Dharmendra Pradhan</h3>
+        <p class="text-sm text-gray-600">Union Minister of Education in the Government of India</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section id="history">
+<!-- History of talcher-->
+  <main class="max-w-5xl mx-auto">
+<div class="py-16 px-4 bg-gradient-to-r from-orange-600 to-yellow-600 flex items-center justify-center mb-12">
+  <h1 class="text-4xl md:text-5xl font-extrabold font-playfair text-white tracking-wide drop-shadow-md uppercase text-center">
+    Complete History of Talcher
+  </h1>
+</div>
+<div class="talcher-box" >
+  <div class="talcher-header">Princely State of British India</div>
+  <div class="talcher-period">1471–1948</div>
+
+  <div class="talcher-img-box"style="display:flex; flex-direction:column; align-items: center;">
+    <img src="Flag_of_the_Talcher_Princely_State.svg.png" alt="Talcher Flag" style="max-width: 100px;display: block;">
+    <div style="font-size: 14px; margin-top: 6px;">Flag</div>
+  </div>
+
+  <div class="talcher-img-box">
+    <img src="BonaiKart_(1).jpg" alt="Talcher State Map">
+    <div style="font-size: 13px; margin-top: 4px;">Talcher State in the Imperial Gazetteer of India</div>
+  </div>
+
+  <div class="talcher-section">
+    <strong>Area</strong>
+    <ul>
+      <li>1,033 km² (399 sq mi)</li>
+    </ul>
+
+    <strong>History</strong>
+    <ul>
+      <li><strong>Established:</strong> 1471</li>
+      <li><strong>Accession to India:</strong> 1948</li>
+    </ul>
+  </div>
+
+  <div class="talcher-footer">
+    Succeeded by: <br> <span style="font-size: 18px;">India 🇮🇳</span>
+  </div>
+</div>
+<!-- Stylish Talcher Palace Card -->
+<div style="max-width: 600px; margin: 30px auto; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); background-color: #fff;">
+  <div style="position: relative;">
+    <img src="rajbati.jpg" alt="Talcher Palace" style="width: 100%; height: auto; display: block;">
+    <div style="
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.95);
+      text-align: center;
+      padding: 12px 0;
+      font-size: 20px;
+      font-weight: bold;
+      color: #333;
+      border-top-left-radius: 16px;
+      border-top-right-radius: 16px;
+    ">
+      <p>Talcher Palace</p>
+    </div>
+  </div>
+</div>
+<!-- Stylish Talcher Old Palace Card -->
+<div style="max-width: 600px; margin: 30px auto; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); background-color: #fff;">
+  <div style="position: relative;">
+    <img src="old rajbati.jpg" alt="Talcher Palace" style="width: 100%; height: auto; display: block;">
+    <div style="
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.95);
+      text-align: center;
+      padding: 12px 0;
+      font-size: 20px;
+      font-weight: bold;
+      color: #333;
+      border-top-left-radius: 16px;
+      border-top-right-radius: 16px;
+    ">
+      <p>Talcher Old Palace</p>
+    </div>
+  </div>
+</div>
+<!-- new talcher king and queen -->
+<section class="relative bg-gradient-to-r from-yellow-300 to-orange-400 py-10 px-4 mt-10 mb-10 z-10 rounded-t-3xl shadow-xl">
+  <div class="max-w-5xl mx-auto text-center text-white">
+    <h2 class="text-3xl font-bold mb-2 drop-shadow-md">Talcher New King and Queen</h2>
+    <p class="text-base mb-6 text-gray-100 drop-shadow-sm">
+      Honoring the present King and Queen of Talcher who represent the town’s tradition and leadership in a modern era.
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+      <!-- King Card -->
+      <div class="bg-white bg-opacity-95 p-4 rounded-xl shadow-md transition hover:shadow-lg text-center">
+        <img src="images (7).jpeg" alt="King of Talcher" class="w-full max-h-40 object-contain rounded-md mb-2" />
+        <h3 class="text-xl font-bold text-gray-800 mb-1">Raja Saheb Vijayendra Chandra Deva </h3>
+        <p class="text-sm text-gray-600">Vijayendra Chandra Deb is the crown prince (Yuvaraj) of Talcher and the elder son of Raja Rajendra Chandra Deb Birabara Harichandan Mahapatra. He belongs to the royal family of Talcher in Odisha. In 2014, he married Priyamvada Singh from Rajasthan. Vijayendra is actively involved in preserving the history and cultural heritage of the Talcher royal family. Under his family's legacy, the Talcher Palace was honored with a special postal cover in 2022, showcasing its iconic Singha Dwar.</p>
+      </div>
+
+      <!-- Queen Card -->
+      <div class="bg-white bg-opacity-95 p-4 rounded-xl shadow-md transition hover:shadow-lg text-center">
+        <img src="priyamada singh.jpeg" alt="Queen of Talcher" class="w-full max-h-40 object-contain rounded-md mb-2" />
+        <h3 class="text-xl font-bold text-gray-800 mb-1">Rani Saheba Priyamada Singh</h3>
+        <p class="text-sm text-gray-600">Priyamvada Singh is a heritage conservationist and the wife of Vijayendra Chandra Deb. She hails from the royal family of Meja in Rajasthan and worked for over ten years in the Indian television industry, contributing to major shows like Kaun Banega Crorepati and India’s Got Talent. After her media career, she dedicated herself to restoring her ancestral Meja Fort using traditional methods and local artisans. For her efforts, she was awarded the Nari Shakti Puraskar in 2019 by the President of India.
+</p>
+      </div>
+    </div>
+  </div>
+</section>
+  <!-- Geographic and Cultural Overview -->
+    <section class="w-[90%] max-w-sm mx-auto card fade-slide bg-gradient-to-r from-yellow-50 via-yellow-200 to-yellow-100 shadow-md rounded-xl p-4 md:p-5 text-sm md:text-base transition-transform duration-500 hover:scale-105 mb-6">
+      <h2 class="text-2xl font-bold text-amber-700 mb-2 font-playfair ">Geographic and Cultural Overview</h2>
+      <p>Talcher is situated on the banks of the Brahmani River in the Angul district of Odisha, India. Historically, it has been one of the prominent Gadjat (Feudatory States) in the region. Known for its rich cultural heritage, temples, and festivals, Talcher holds a special place in Odisha’s history.</p>
+    </section>
+
+    <!-- Early Inhabitants and Agricultural Development -->
+    <section class="w-[90%] max-w-sm mx-auto card fade-slide bg-gradient-to-r from-yellow-50 via-yellow-200 to-yellow-100 shadow-md rounded-xl p-4 md:p-5 text-sm md:text-base transition-transform duration-500 hover:scale-105 mb-6">
+      <h2 class="text-2xl font-bold text-amber-700 mb-2 font-playfair ">Early Inhabitants and Agricultural Development</h2>
+      <p>In ancient times, the region was inhabited by indigenous communities, notably the Boita Sabaras, who lived peacefully in harmony with nature. In the 14th century, the Panchdiha Chasa community, primarily farmers, migrated to this fertile region, cultivating the land and laying the foundation of Talcher’s agrarian society.</p>
+    </section>
+
+    <!-- Foundation and Mythology -->
+    <section class="w-[90%] max-w-sm mx-auto card fade-slide bg-gradient-to-r from-yellow-50 via-yellow-200 to-yellow-100 shadow-md rounded-xl p-4 md:p-5 text-sm md:text-base transition-transform duration-500 hover:scale-105 mb-6">
+      <h2 class="text-2xl font-bold text-amber-700 mb-2 font-playfair ">Foundation and Mythology of Talcher State</h2>
+      <p>The origins of Talcher State trace back to 1471 CE during the reign of Purushottama Deva of the Gajapati Empire. Narahari Singh, a scion of the Suryavanshi Gajapati dynasty, established his rule in Bhimanagari, which later evolved into Talcher State.</p>
+      <p>According to legend, King Padmanabha Birabara Harichandan was on a hunting expedition when he reached the area near the present-day Taleswari Temple. Inspired by a divine vision from Goddess Hingula, he established his capital there, naming it Talcher after the family deity, Taleswari. The goddess advised the king to worship both her and Goddess Taleswari to defeat the opposing Khandual Zamindar. The king obeyed, emerged victorious, and named the area "Talcher." He is remembered as a pious ruler who constructed many temples in the state.</p>
+    </section>
+
+ 
+
+    <!-- Notable Rulers -->
+    <section class="w-[90%] max-w-sm mx-auto card fade-slide bg-gradient-to-r from-yellow-50 via-yellow-200 to-yellow-100 shadow-md rounded-xl p-4 md:p-5 text-sm md:text-base transition-transform duration-500 hover:scale-105 mb-6">
+      <h2 class="text-2xl font-bold text-amber-700 mb-2 font-playfair ">Notable Rulers and Their Contributions</h2>
+      <ul class="list-disc pl-5 space-y-3">
+        <li><strong>Bhagirathi Birabara Harichandan (1778 – 1846)</strong>: Ascended throne as a minor; built Jagannath Temple in Talcher and Ramchandra Temple at Bijigol.</li>
+        <li><strong>Dayanidhi Birabara Harichandan Mahapatra (1846 – 1873)</strong>: Helped British during Angul rebellion; received title "Mahendra Bahadur"; performed 21-day Somayajna ritual and was called Rajarshi; provided famine relief in 1866.</li>
+        <li><strong>Ramachandra Deba Birabara Harichandan Mahapatra (1873 – 1891)</strong>: Established courts, police, and public departments; built Victoria Hall and Circuit House; authored "Bharatara Sankhipta Itihasa."</li>
+        <li><strong>Kishore Chandra Deba Birabara Harichandan Mahapatra (1891 – 1945)</strong>: Educated at Ravenshaw College; promoted music and literature; established Kishore Chandra Sahitya Samaj.</li>
+        <li><strong>Hrudaya Chandra Deba Birabara Harichandan Mahapatra (1945 – 1948)</strong>: Last ruling king before merger into India; educated at Ravenshaw College; served as magistrate and judge; signed Instrument of Accession on 1 Jan 1948.</li>
+      </ul>
+    </section>
+<!--  Rajendra Chandra Deva image -->
+<div class="king-card" style="max-width: 400px; margin: 30px auto; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); background-color: #fff;">
+  <div style="position: relative;">
+    <img src="Rajendra Chandra Deva.jpeg" alt="Talcher Palace" style="width: 100%; height: auto; object-fit:cover; display: block;">
+    <div style="
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.95);
+      text-align: center;
+      padding: 12px 0;
+      font-size: 20px;
+      font-weight: bold;
+      color: #333;
+      border-top-left-radius: 16px;
+      border-top-right-radius: 16px;
+    ">
+      <p>Raja Saheb Rajendra Chandra Deva</p>
+    </div>
+  </div>
+</div>
+<!--  Kishore Chandra Deb Birabar Harichandan image -->
+<div class="king-card" style="max-width: 400px; margin: 30px auto; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); background-color: #fff;">
+  <div style="position: relative;">
+    <img src=" Kishore Chandra Deb Birabar Harichandan.jpeg" alt="Talcher Palace" style="width: 100%; height: auto; object-fit:cover; display: block;">
+    <div style="
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.95);
+      text-align: center;
+      padding: 12px 0;
+      font-size: 20px;
+      font-weight: bold;
+      color: #333;
+      border-top-left-radius: 16px;
+      border-top-right-radius: 16px;
+    ">
+      <p>Raja Saheb Kishore Chandra Deb Birabar Harichandan</p>
+    </div>
+  </div>
+</div>
+<!-- Raja Saheb Shri Hrudaya Chandra Deb Birabar Harichandan image -->
+<div class="king-card" style="max-width: 400px; margin: 30px auto; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); background-color: #fff;">
+  <div style="position: relative;">
+    <img src="Raja Saheb Shri Hrudaya Chandra Deb Birabar Harichandan.jpeg" alt="Talcher Palace" style="width: 100%; height: auto; object-fit:cover; display: block;">
+    <div style="
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.95);
+      text-align: center;
+      padding: 12px 0;
+      font-size: 20px;
+      font-weight: bold;
+      color: #333;
+      border-top-left-radius: 16px;
+      border-top-right-radius: 16px;
+    ">
+      <p>Raja Saheb Shri Hrudaya Chandra Deb Birabar Harichandan</p>
+    </div>
+  </div>
+</div>
+<!-- Titular Kings After Independence -->
+<section class="w-[90%] max-w-sm mx-auto card fade-slide bg-gradient-to-r from-yellow-50 via-yellow-200 to-yellow-100 shadow-md rounded-xl p-4 md:p-5 text-sm md:text-base transition-transform duration-500 hover:scale-105 mb-6">
+  <h2 class="text-2xl font-bold text-amber-700 mb-2 font-playfair ">Titular Kings after Independence</h2>
+  <ul class="list-disc pl-5 space-y-2">
+    <li><strong>Hrudaya Chandra Deba Birabara Harichandan Mahapatra</strong> (1 Jan 1948 – 11 Sep 1970)</li>
+    <li><strong>Soubhagya Chandra Deba Birabara Harichandan Mahapatra</strong> (11 Sep 1970 – 14 Mar 2008)</li>
+    <li><strong>Rajendra Chandra Deba Birabara Harichandan Mahapatra</strong> (14 Mar 2008 – 21 Apr 2025)</li>
+    <li><strong>Vijayendra Chandra Deba Birabara Harichandan Mahapatra(current)</strong> – Sri Raja Saheb Vijayendra Chandra Deb Birabar Harichandan is the current titular head of the Talcher royal family in Odisha, India</li>
+    <li><strong>Yuvrani Saheba Priyamvada Kumari (current)</strong> – daughter of Rao Saheb Jitendra Singh Ji of Meja, a noble family from Rajasthan  </li>
+  </ul>
+</section>
+<section class="max-w-5xl mx-auto mt-10">
+  <div class="text-center mb-8">
+<h2 class="text-4xl md:text-5xl font-extrabold text-white drop-shadow-md font-playfair tracking-tight">
+  Talcher Praja Mandala Andolana
+</h2>
+<p class="mt-2 text-lg md:text-xl text-amber-900 font-semibold drop-shadow-sm tracking-wide">
+  A Brave Movement Against Monarchy
+</p>
+  </div>
+
+  <div class="grid gap-6 md:grid-cols-2">
+    
+    <!-- Background Card -->
+    <div class="w-[90%] max-w-sm mx-auto card fade-slide bg-gradient-to-r from-yellow-50 via-yellow-200 to-yellow-100 shadow-md rounded-xl p-4 md:p-5 text-sm md:text-base transition-transform duration-500 hover:scale-105 mb-6">
+      <h3 class="text-2xl font-bold text-amber-700 mb-2 font-playfair">Background</h3>
+      <p class="text-amber-900">The Praja Mandala Andolana in Talcher was part of a wider movement across princely states of Odisha. It demanded justice, people's rights, and the end of autocratic rule under the princely kings aligned with British colonial power.</p>
+    </div>
+
+    <!-- Movement Goals -->
+    <div class="w-[90%] max-w-sm mx-auto card fade-slide bg-gradient-to-r from-yellow-50 via-yellow-200 to-yellow-100 shadow-md rounded-xl p-4 md:p-5 text-sm md:text-base transition-transform duration-500 hover:scale-105 mb-6">
+      <h3 class="text-2xl font-bold text-amber-700 mb-2 font-playfair">Goals of the Movement</h3>
+      <ul class="list-disc pl-5 text-amber-900 space-y-1">
+        <li>End of feudal oppression</li>
+        <li>Fair and representative governance</li>
+        <li>Freedom of speech and protest</li>
+        <li>Right to education and justice</li>
+      </ul>
+    </div>
+
+    <!-- Notable Warriors -->
+    <div class="w-[90%] max-w-sm mx-auto card fade-slide bg-gradient-to-r from-yellow-50 via-yellow-200 to-yellow-100 shadow-md rounded-xl p-4 md:p-5 text-sm md:text-base transition-transform duration-500 hover:scale-105 mb-6">
+      <h3 class="text-2xl font-bold text-amber-700 mb-2 font-playfair">Notable Warriors</h3>
+      <ul class="list-disc pl-5 text-amber-900 space-y-1">
+        <li><strong>Pabitra Mohan Pradhan-</strong>A central figure in the Talcher Prajamandal movement, Pabitra Mohan Pradhan was known for his unwavering commitment to the cause.  In 1942, he escaped from Talcher Jail, leading to widespread rumors of his death, which intensified the movement.  He remained underground until his warrant was lifted in August 1947.  </li>
+        <li><strong>Krutibas Rath-</strong> Krutibas Rath was a prominent leader who mobilized the masses against the oppressive policies of the Talcher monarchy.  His leadership was instrumental in organizing protests and advocating for civil liberties</li>
+        <li><strong>Maguni Pradhan-</strong>Maguni Pradhan played a significant role in galvanizing support among the local populace.  He was actively involved in organizing demonstrations and spreading awareness about the movement's objectives.  </li>
+      </ul>
+    </div>
+
+    <!-- Legacy -->
+    <div class="w-[90%] max-w-sm mx-auto card fade-slide bg-gradient-to-r from-yellow-50 via-yellow-200 to-yellow-100 shadow-md rounded-xl p-4 md:p-5 text-sm md:text-base transition-transform duration-500 hover:scale-105 mb-6">
+      <h3 class="text-2xl font-bold text-amber-700 mb-2 font-playfair">Legacy</h3>
+      <p class="text-amber-900">This movement laid the foundation for democracy in Talcher. It pressured rulers and colonial powers to allow integration with the Indian Union. The spirit of resistance and people's unity remains a proud chapter in Odisha's history.</p>
+    </div>
+
+  </div>
+</section>
+<!--  Pabitra Mohan Pradhan  image -->
+<div class="king-card" style="max-width: 600px; margin: 30px auto; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); background-color: #fff;">
+  <div style="position: relative;">
+    <img src="Pabitra Mohan Pradhan.jpeg" alt="Talcher Palace" style="width: 100%; height: auto; object-fit:cover; display: block;">
+    <div style="
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.95);
+      text-align: center;
+      padding: 12px 0;
+      font-size: 20px;
+      font-weight: bold;
+      color: #333;
+      border-top-left-radius: 16px;
+      border-top-right-radius: 16px;
+    ">
+      <p>Pabitra Mohan Pradhan </p>
+    </div>
+  </div>
+</div>
+<!-- Maguni Charan Pradhan image -->
+<div class="king-card" style="max-width: 400px; margin: 30px auto; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); background-color: #fff;">
+  <div style="position: relative;">
+    <img src="Maguni_Charan_Pradhan.jpg" alt="Talcher Palace" style="width: 100%; height: auto; object-fit:cover; display: block;">
+    <div style="
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.95);
+      text-align: center;
+      padding: 12px 0;
+      font-size: 20px;
+      font-weight: bold;
+      color: #333;
+      border-top-left-radius: 16px;
+      border-top-right-radius: 16px;
+    ">
+      <p>Maguni Charan Pradhan </p>
+    </div>
+  </div>
+</div>
+<!--  Nilamani Pradhan  -->
+<div class="king-card" style="max-width: 400px; margin: 30px auto; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); background-color: #fff;">
+  <div style="position: relative;">
+    <img src="Nilamani-Pradhan.jpg" alt="Talcher Palace" style="width: 100%; height: auto; object-fit:cover; display: block;">
+    <div style="
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.95);
+      text-align: center;
+      padding: 12px 0;
+      font-size: 20px;
+      font-weight: bold;
+      color: #333;
+      border-top-left-radius: 16px;
+      border-top-right-radius: 16px;
+    ">
+      <p>Nilamani Pradhan </p>
+    </div>
+  </div>
+</div>
+
+<!-- Include Google Font for Playfair -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+</section>
+<section class="bg-gradient-to-br from-orange-600 to-yellow-600 py-12 px-6 max-w-7xl mx-auto" id="places">
+  <h2 class="text-4xl font-bold text-blue-700 mb-6 text-center">Hidden Gems & Heritage of Talcher</h2>
+  
+
+  <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+    <!-- 1 -->
+    <div class="bg-gray-100 rounded-xl overflow-hidden shadow-md">
+      <img src="deulajhari-hotspring.jpeg" alt="Deulajhari Hot Springs" class="w-full h-48 object-cover">
+      <div class="p-4">
+        <h3 class="text-xl font-semibold text-blue-600">Deulajhari Hot Springs</h3>
+        <p class="text-gray-700 leading-relaxed mt-2">Deulajhari Hot Spring, located around 25 km from Talcher, is a natural marvel known for its sulfur-rich thermal waters believed to have medicinal and healing properties. Nestled amidst dense forests and ancient trees, the spring lies beside a revered Shiva temple, attracting both spiritual devotees and nature lovers. The warm waters flow continuously and are collected in small bathing enclosures for safe and peaceful use. Deulajhari is especially popular during Maha Shivaratri when pilgrims gather to bathe and offer prayers. The serene environment, surrounded by banyan and peepal trees, makes it a unique blend of wellness, spirituality, and natural beauty — a hidden gem in the Talcher-Angul tourism circuit.</p>
+      </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="bg-gray-100 rounded-xl overflow-hidden shadow-md">
+      <img src="jaganath_temple.webp" alt="Jagannath Temple" class="w-full h-48 object-cover">
+      <div class="p-4">
+        <h3 class="text-xl font-semibold text-blue-600">Jagannath Temple, Talcher</h3>
+        <p class="text-gray-700 leading-relaxed mt-2">The Jagannath Temple in Talcher, located in Odisha's Angul district, is a significant religious site dedicated to Lord Jagannath, a revered form of Lord Vishnu.  This temple holds historical importance, having been established by Raja Bhagirath Birabar, the ruler of Talcher from 1778 to 1846.  He constructed the temple using massive stones, reflecting the architectural grandeur of the period.  The temple is situated in Talcher Town, with its coordinates being approximately X64Q+2FR, Talcher Town, Odisha 759107, India.  
+
+The temple's architecture and rituals closely mirror those of the famous Jagannath Temple in Puri, emphasizing the deep-rooted cultural and religious connections between the two sites.  This alignment underscores the significance of Talcher's temple in the broader context of Odisha's religious heritage. 
+
+Visitors to Talcher can explore this temple to experience its spiritual ambiance and historical architecture.  It's advisable to check local resources or contact the temple authorities for information on visiting hours and any special events or festivals. 
+</p>
+      </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="bg-gray-100 rounded-xl overflow-hidden shadow-md">
+      <img src="samal_barrage.jpg" alt="Samal Barrage" class="w-full h-48 object-cover">
+      <div class="p-4">
+        <h3 class="text-xl font-semibold text-blue-600">Samal Barrage</h3>
+        <p class="text-gray-700 leading-relaxed mt-2">The Samal Barrage, located on the Brahmani River near Talcher in Odisha’s Angul district, is a crucial part of the Rengali Irrigation Project. It was built to divert water for irrigation across multiple districts, supply industrial water, and support cooling needs for the NTPC Talcher Kaniha power plant. The barrage stretches about 533 meters in length and has significant discharge capacity through its head regulators. While it has greatly enhanced irrigation and industrial development, the project also caused submergence of several villages, leading to displacement and ongoing rehabilitation challenges for affected residents. The area is well connected by roads, with Talcher town about 35 km away, but concerns over soil erosion, siltation, and pollution have impacted water retention and availability. Despite these challenges, the Samal Barrage remains an important infrastructure asset for the region’s economy and agriculture.
+</p>
+      </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="bg-gray-100 rounded-xl overflow-hidden shadow-md">
+      <img src="hingula_temple.jpeg" alt="Hingula Temple" class="class="w-full h-20 object-cover"">
+      <div class="p-4">
+        <h3 class="text-xl font-semibold text-blue-600">Hingula Temple, Gopalprasad</h3>
+        <p class="text-gray-700 leading-relaxed mt-2">The Maa Hingula Temple is a revered Shakti Peetha situated in Gopal Prasad, approximately 17 km from Angul and 34 km from Talcher in Odisha's Angul district.  This temple is dedicated to Goddess Hingula, believed to be the manifestation of fire and a vital part of the cosmic energy.  According to legend, during the cosmic event where Lord Shiva performed the Tandava, the body of Goddess Sati was dismembered, and her body parts fell at 52 locations, each becoming a sacred Shakti Peetha.  The forehead portion, known as Brahmarandhra, is said to have fallen in Gopal Prasad, establishing it as a significant site of worship  .
+
+The temple is renowned for the Hingula Yatra, an annual festival held during Chaitra Shukla Chaturdashi (around March-April), where Goddess Hingula is believed to manifest in the form of fire.  Devotees gather to offer prayers and sacrifices, and the event concludes with the Sital Puja after nine days  .
+
+The nearest railway stations are Angul and Talcher, both well-connected to major cities.  From these stations, local transport options like taxis and buses are available to reach the temple.  The nearest airport is Bhubaneswar, approximately 154 km away, with regular flights connecting to various cities  .</p>
+      </div>
+    </div>
+
+    
+    <!-- 7 -->
+    <div class="bg-gray-100 rounded-xl overflow-hidden shadow-md">
+       <div class="p-4">
+        <h3 class="text-xl font-semibold text-blue-600">Rani Sagar Tank</h3>
+        <p class="text-gray-700 leading-relaxed mt-2">The Rani Sagar Tank is a notable water body situated in Talcher, Odisha.  According to the Talcher Municipal Corporation's records, the tank is located in Ward No. 11 and spans an area of approximately 2.44 acres.  It is officially referred to as the Rani Park Tank  .
+
+This tank is one of several water bodies in Talcher, including others like Jubuli Tank, Soubhagya Sagar, and Chitrakiut Tank, which collectively contribute to the town's water management and aesthetic appeal.  While specific historical or cultural details about Rani Sagar Tank are limited, its inclusion in the municipal records highlights its importance in the local infrastructure. 
+
+For those interested in visiting or learning more about Talcher's water bodies, the Talcher Municipal Corporation provides information on various tanks and their locations.  Exploring these sites can offer insights into the region's water management practices and provide opportunities for community engagement and environmental awareness. 
+</p>
+      </div>
+</div>
+
+    <!-- 8 -->
+    <div class="bg-gray-100 rounded-xl overflow-hidden shadow-md">
+      <img src="mangala_mandira.jpeg" alt="Mangala Temple" class="w-full h-48 object-cover">
+      <div class="p-4">
+        <h3 class="text-xl font-semibold text-blue-600">Mangala Mandira,Hatotata </h3>
+        <p class="text-gray-700 leading-relaxed mt-2">Mangala Mandir in Hatatota, Talcher, is not only a sacred place of worship but also a cultural hub that brings together people from nearby areas during religious events and community gatherings. The temple is dedicated to Goddess Mangala, who is revered as a protective mother figure and a symbol of divine feminine power. Known for fulfilling the wishes of her devotees, Goddess Mangala is especially worshipped during festivals like Durga Puja, Chaitra Mela, and Jhamu Yatra, during which the temple becomes vibrant with rituals, processions, and spiritual activities.
+
+Located along Hatatota Road, the temple is easily accessible from all parts of Talcher, making it a regular destination for devotees and tourists alike. The peaceful surroundings of the temple, combined with the rhythmic chanting of prayers and the fragrance of incense, create a spiritually uplifting environment. Despite being modest in structure, the Mangala Mandir holds immense emotional and spiritual value for the local people. It is common to see families visiting the temple before important life events like weddings, journeys, or examinations, seeking blessings for success and well-being.
+
+The temple’s role goes beyond religious worship—it acts as a unifying force in the community and a symbol of Talcher’s rich cultural and spiritual heritage.
+
+ </p>
+      </div>
+    </div>
+
+    <!-- 9 -->
+    <div class="bg-gray-100 rounded-xl overflow-hidden shadow-md">
+      <img src="kali_temple.jpg" alt=" Kali Temple" class="w-full h-48 object-cover">
+      <div class="p-4">
+        <h3 class="text-xl font-semibold text-blue-600">Maa Kali Temple </h3>
+        <p class="text-gray-700 leading-relaxed mt-2">The Maa Kali Temple in Hatatota, Talcher, is a revered spiritual site dedicated to Goddess Kali, embodying strength and protection in Hindu tradition.  Situated along Hatatota Main Road in Talcher Sadar, Angul district, Odisha, the temple is easily accessible to devotees and visitors alike.  The area is well-connected, with landmarks such as the HDFC Bank branch located nearby, indicating the temple's central location within the community.  
+
+The temple serves as a focal point for religious activities in the region.  Devotees gather here to offer prayers and participate in various rituals and festivals honoring Goddess Kali.  The temple's prominence is such that it serves as a landmark for local businesses and establishments.  
+
+For those interested in visiting, the temple is accessible and welcomes devotees throughout the year.  The serene environment and spiritual ambiance make it a place of solace and devotion for many. 
+</p>
+      </div>
+    </div>
+
+    <!-- 10 -->
+    <div class="bg-gray-100 rounded-xl overflow-hidden shadow-md">
+      <img src="kukudanga.jpg" alt="Kukudanga Picnic Spot" class="w-full h-48 object-cover">
+      <div class="p-4">
+        <h3 class="text-xl font-semibold text-blue-600">Kukudanga Picnic Spot</h3>
+        <p class="text-gray-700 leading-relaxed mt-2">Kukudanga Picnic Spot is a popular recreational destination located approximately 7 km from Angul town in Odisha.  Situated along the Angul-Talcher Road, near Nalco Nagar, this spot is renowned for its natural beauty and serene environment, making it an ideal location for family outings and picnics  .
+
+The main attraction of Kukudanga is the spring water flowing under a bridge, creating a picturesque setting that attracts visitors seeking a peaceful retreat  . The area is well-maintained, offering facilities such as seating arrangements and clean surroundings, ensuring a comfortable experience for visitors. 
+
+For those interested in exploring more, nearby attractions include the Eco Park, Angul Stadium, and the historic Talcher Palace  . These sites provide additional opportunities for recreation and cultural exploration, enhancing the overall appeal of the region. 
+
+Whether you're looking to relax by the water, enjoy a picnic with family and friends, or explore the natural beauty of Angul, Kukudanga Picnic Spot offers a delightful experience. </p>
+      </div>
+    </div>
+
+    <!-- 11 to 19 -->
+   
+
+    <div class="bg-gray-100 rounded-xl overflow-hidden shadow-md">
+      <img src="Bishnu_AnantaShayan,_Saraang.jpg" alt="Anantashayi Vishnu Temple" class="w-full h-48 object-cover">
+      <div class="p-4">
+        <h3 class="text-xl font-semibold text-blue-600">Anantashayana Vishnu Temple</h3>
+        <p class="text-gray-700 leading-relaxed mt-2">The Anantashayana Vishnu Temple is a remarkable archaeological site located in Saranga village, approximately 3 km from Talcher and 23 km from Angul, in Dhenkanal district, Odisha.  This open-air rock relief depicts Lord Vishnu reclining on the cosmic serpent Ananta and is among the largest horizontal rock-cut sculptures of its kind in India, measuring about 15.4 meters (51 feet) in length.  
+
+Carved during the early 9th century CE under the Bhauma-Kara dynasty, the sculpture features Vishnu with four arms, holding a chakra (discus), shankha (conch), gada (mace), and a symbolic lotus.  The image portrays Vishnu in a serene reclining posture, with the serpent Ananta's hoods forming a protective canopy over his head.  A lotus emerging from Vishnu's navel supports the creator god Brahma, who is depicted in meditation.  
+
+The site is situated on the left bank of the Brahmani River, at an elevation of approximately 61 meters (200 feet).  It is accessible by road, approximately 1.5 km from Saranga village.  The sculpture is maintained by the Archaeological Survey of India and continues to be a place of worship for locals.  Due to its location in the riverbed, the sculpture faces potential threats from flooding, but efforts are made to preserve its condition.  
+
+This site offers a unique glimpse into the religious and artistic heritage of medieval Odisha and is a testament to the region's rich cultural history. </p>
+      </div>
+    </div>
+
+   <div class="bg-gray-100 rounded-xl overflow-hidden shadow-md">
+  <img src="athmalik.jpeg" alt="Athmallik Forest Trails" class="w-full h-48 object-cover">
+  <div class="p-4">
+    <h3 class="text-xl font-semibold text-blue-700">Athmallik Forest Trails</h3>
+    <p class="text-gray-700 leading-relaxed mt-2">
+      Nestled amidst the undulating hills near Talcher, Athmallik is a hidden gem known for its sprawling forest trails that blend natural beauty with serene tranquility. The area is enveloped by thick teak and sal forests, making it a perfect retreat for nature lovers, trekkers, and birdwatchers. These trails are rich in biodiversity and offer sightings of various native birds, butterflies, and small wildlife. During early mornings, the mist-covered trees and the sound of chirping birds create a magical atmosphere ideal for meditation and peaceful walks. Local tribal communities add cultural richness to the area, and their sustainable coexistence with the forest is a story in itself. The forest trails are especially popular during winter and monsoon seasons when the foliage is lush and vibrant. Athmallik is not just a trekking destination—it's a nature therapy zone for those seeking peace, adventure, and connection with the wild heart of Odisha.
+    </p>
+  </div>
+</div>
+
+
+    <div class="bg-gray-100 rounded-xl overflow-hidden shadow-md">
+      <img src="ntpc_eco_park.jpeg" alt="Eco Park NTPC" class="w-full h-48 object-cover">
+      <div class="p-4">
+        <h3 class="text-xl font-semibold text-blue-600">NTPC Eco Park (Kaniha)</h3>
+        <p class="text-gray-700 leading-relaxed mt-2">NTPC Kaniha, located near Talcher in Odisha's Angul district, is home to the Panchvati Eco Park, a green initiative by NTPC aimed at promoting environmental sustainability and community engagement.  Inaugurated by Shri K.S. Sundaram, Executive Director of NTPC, the park serves as a recreational space for residents and visitors alike.  
+
+The Panchvati Eco Park features a variety of flora, walking trails, and seating areas, providing a serene environment for relaxation and nature appreciation.  Additionally, NTPC Kaniha has undertaken afforestation efforts, including the implementation of the Miyawaki plantation technique during the Van Mahotsav celebrations, further enhancing the region's green cover.  
+
+These initiatives reflect NTPC Kaniha's commitment to ecological balance and community well-being, offering a green oasis amidst the industrial landscape of Talcher. 
+</p>
+      </div>
+    </div>
+
+    <div class="bg-gray-100 rounded-xl overflow-hidden shadow-md">
+      <img src="tikarapada.webp" alt="Tikarpada Wildlife Sanctuary" class="w-full h-48 object-cover">
+      <div class="p-4">
+        <h3 class="text-xl font-semibold text-blue-600">Tikarpada Wildlife Sanctuary</h3>
+        <p class="text-gray-700 leading-relaxed mt-2">Tikarpada Wildlife Sanctuary, situated in Angul district of Odisha along the banks of the Mahanadi River, is a pristine haven celebrated for its diverse flora and fauna, including tigers, elephants, sloth bears, and a variety of rare birds such as hornbills and serpent eagles. As part of the Satkosia Tiger Reserve, it plays a crucial role in the conservation of endangered species, notably the gharial crocodile, with successful natural breeding recorded here. Visitors to Tikarpada can enjoy a range of eco-tourism activities like jungle safaris, bird watching, boating, and camping at the Tikarpada Nature Camp, which offers comfortable tent accommodations with modern amenities and delicious local cuisine. The sanctuary’s tranquil environment, combined with its scenic river views and rich wildlife, makes it a popular destination for nature enthusiasts, researchers, and adventure seekers. Well connected by road, rail, and air through Angul and Bhubaneswar, Tikarpada is best explored during the winter months when the weather is pleasant, providing an ideal escape into Odisha’s natural beauty and biodiversity.
+
+</p>
+      </div>
+    </div>
+
+    <div class="bg-gray-100 rounded-xl overflow-hidden shadow-md">
+      <img src="sureshwari_waterfall.jpg" alt="Bypass View" class="w-full h-48 object-cover">
+      <div class="p-4">
+        <h3 class="text-xl font-semibold text-blue-600">Sureshwari Waterfall </h3>
+        <p class="text-gray-700 leading-relaxed mt-2">Sureshwari Waterfall is a hidden gem nestled within the Bampur Forest Range in Angul district, Odisha, approximately 40 km from Bamur Chowk along the Cuttack-Sambalpur highway.  This serene cascade gracefully descends over rocky cliffs, surrounded by lush greenery, offering a tranquil retreat for nature enthusiasts and adventure seekers alike.  The journey to the waterfall involves a moderate trek through dense forests, passing by the village of Pathargarh—the last village in Angul—before reaching the site.  Along the way, visitors encounter the Sureshwari Temple, from which the waterfall derives its name.  The best time to visit is during the winter months (November to February), when the weather is pleasant, making it ideal for picnics, photography, and nature walks.  While the trail is accessible, travelers are advised to be cautious due to the dense forest and potential wildlife encounters.  Sureshwari Waterfall remains a lesser-known destination, offering an off-the-beaten-path experience for those looking to explore Odisha's natural beauty. 
+</p>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="py-16 px-4 bg-gradient-to-r from-yellow-600 to-orange-600" id="Hotels">
+  <div class="max-w-7xl mx-auto px-6">
+    <h2 class="text-4xl font-bold text-center text-blue-700 mb-6">Talcher Hotels for Comfortable Stay</h2>
+    <p class="text-center text-gray-700 leading-relaxed mb-12">
+      Talcher, a hub for power and industry, offers a range of accommodations suitable for tourists, professionals, and officials. From peaceful gardens to modern amenities, these hotels ensure a pleasant stay.
+    </p>
+
+    <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      <!-- Hotel Card -->
+      <div class="bg-gray-50 rounded-2xl shadow hover:shadow-lg overflow-hidden transition">
+        <img src="hotel_greenpark.jpeg"alt="Hotel Green Park" class="w-full h-48 object-cover">
+        <div class="p-5">
+          <h3 class="text-xl font-semibold text-blue-600">Hotel Green Park</h3>
+          <p class="text-gray-700 mt-2 leading-relaxed">Hotel Green Park in Talcher, Odisha, is a well-regarded accommodation option located at Bypass Chowk, close to Talcher Railway Station. It offers a variety of rooms including A/C Deluxe, Super Deluxe, Executive Super Deluxe, Golden Suite, and Royal Suite, with prices starting around ₹1,295 per night. The rooms are equipped with essential amenities such as air conditioning, LED TVs, free Wi-Fi, and clean attached bathrooms. The hotel features an in-house restaurant serving multi-cuisine meals, and also provides banquet facilities for events and meetings. Guests appreciate the hotel's convenient location, affordable pricing, and helpful staff, though some reviews suggest room cleanliness could be improved. With additional amenities like 24-hour front desk service, room service, laundry, free parking, and pet-friendly options, Hotel Green Park serves as a comfortable and budget-friendly choice for both business and leisure travelers visiting Talcher.
+
+</p>
+        </div>
+      </div>
+      <!-- Hotel Shree Siddharth Regency-->
+      <div class="bg-gray-50 rounded-2xl shadow hover:shadow-lg overflow-hidden transition">
+        <img src="hotel-shree-siddharth-regency.jpeg" alt="Hotel Shree Siddharth Regency " class="w-full h-48 object-cover">
+        <div class="p-5">
+          <h3 class="text-xl font-semibold text-blue-600">Hotel Shree Siddharth Regency </h3>
+          <p class="text-gray-700 mt-2 leading-relaxed">Hotel Siddharth Regency is a 3-star hotel located on National Highway 200 in Talcher, Odisha.  Its strategic position near the Hero MotoCorp showroom places it amidst reliable shopping and entertainment options, making it convenient for both business and leisure travelers  .
+
+The hotel offers 30 well-appointed guestrooms, each equipped with complimentary Wi-Fi and bathrooms featuring rainfall showerheads  . Guests can enjoy amenities such as room service, housekeeping, and free self-parking  . The property maintains a smoke-free environment for the comfort of its guests  .
+
+While the hotel is appreciated for its dedicated staff and good room service, some reviews have noted that the food can be oily  .
+
+For travelers interested in local attractions, the Taptapani Hot Water Springs are approximately 22 km away, and Gopabandhu Park is about 41 km from the hotel  .
+
+For more information or to make a reservation, you can visit their TripAdvisor page or check availability on Expedia.</p>
+        </div>
+      </div>
+
+      <!-- Surya Garden -->
+      <div class="bg-gray-50 rounded-2xl shadow hover:shadow-lg overflow-hidden transition">
+        <img src="surya-garden.webp" alt="Surya Garden Hotel" class="w-full h-48 object-cover">
+        <div class="p-5">
+          <h3 class="text-xl font-semibold text-blue-600">Hotel Surya Garden</h3>
+          <p class="text-gray-700 mt-2 leading-relaxed">Hotel Surya Garden in Talcher, Odisha, is a premium 3-star hotel located on Netaji Subash Bose Marg, offering a blend of luxury, comfort, and modern amenities. It features well-furnished Executive King and Twin Bed Rooms, as well as spacious suites, all equipped with air conditioning, LED TVs, and free Wi-Fi. The hotel houses a multi-cuisine restaurant named Sarvika and a stylish bar called Silenus, making it a great choice for dining and relaxation. With two large banquet halls accommodating up to 500 guests and multiple meeting rooms for business needs, it's also ideal for events and corporate gatherings. Additional amenities like a gym, yoga room, and excellent service contribute to its strong reputation, earning it high ratings from guests. For bookings, visitors can contact the hotel directly or visit suryagarden.com.</p>
+        </div>
+      </div>
+
+      <!-- Kp Palace -->
+      <div class="bg-gray-50 rounded-2xl shadow hover:shadow-lg overflow-hidden transition">
+        <img src="kp-palace.webp" alt="Hotel Kp Palace" class="w-full h-48 object-cover">
+        <div class="p-5">
+          <h3 class="text-xl font-semibold text-blue-600">Hotel KP Palace</h3>
+          <p class="text-gray-700 mt-2 leading-relaxed">Hotel KP Palace is a 3-star hotel situated in Talcher, Odisha, offering a blend of comfort and convenience for travelers.  Located near Talcher Railway Station, it provides easy access to transportation and local attractions. 
+
+The hotel features a variety of amenities, including an outdoor swimming pool, spa and wellness center, fitness center, and a lush garden.  Guests can enjoy dining at the on-site restaurant, which serves a range of cuisines, and relax at the bar.  Additional services include free Wi-Fi, room service, and a 24-hour front desk. 
+
+Rooms at Hotel KP Palace are equipped with air conditioning, flat-screen TVs, private bathrooms, and balconies offering views of the pool or garden.  The hotel also provides facilities for business travelers, such as meeting rooms and a business center. 
+
+Guest reviews highlight the hotel's cleanliness, courteous staff, and convenient location.  Some guests have noted areas for improvement, such as room cleanliness and maintenance of amenities. 
+
+For reservations or more information, you can visit their official website or check availability on Booking.com</p>
+        </div>
+      </div>
+
+      <!-- Hotel Shakti Continental
+
+ -->
+      <div class="bg-gray-50 rounded-2xl shadow hover:shadow-lg overflow-hidden transition">
+        <img src="hotel-shakti-continental.jpeg" alt="Hotel Shakti Continental
+
+" class="w-full h-48 object-cover">
+        <div class="p-5">
+          <h3 class="text-xl font-semibold text-blue-600">Hotel Shakti Continental
+
+</h3>
+          <p class="text-gray-700 mt-2 leading-relaxed">Hotel Shakti Continental is a distinguished 4-star business-class hotel located in Amalapada, Angul, Odisha.  Renowned for its blend of luxury and comfort, it caters to both corporate and leisure travelers seeking top-tier accommodations in the region. 
+
+Location & Accessibility: Situated at 6th Lane, Amalapada, Angul, Odisha-759122, the hotel enjoys a strategic position near major industrial hubs, making it ideal for business visitors.  It's approximately 4 km from Angul Railway Station, ensuring convenient connectivity.  
+
+Accommodations: The hotel boasts 84 well-appointed rooms, including Executive Twin Bed and Premium King Bed options.  Each room is equipped with modern amenities such as air conditioning, flat-screen TVs, minibars, work desks, and private balconies.  
+
+Facilities & Services: Guests can indulge in a range of facilities, including: 
+
+A fitness center for health enthusiasts. 
+
+An on-site restaurant and bar offering diverse culinary delights. 
+
+Meeting and banquet halls suitable for corporate events and social gatherings. 
+
+Complimentary Wi-Fi throughout the property. 
+
+24-hour front desk and room service. 
+
+
+Dining: The hotel's restaurant is praised for its delectable dishes, with guests particularly enjoying the buffet breakfast spread.  
+
+Guest Feedback: Hotel Shakti Continental has garnered positive reviews for its spacious rooms, cleanliness, and attentive staff.  On Goibibo, it holds an impressive rating of 4.4 out of 5, reflecting its commitment to guest satisfaction.  
+</p>
+        </div>
+      </div>
+
+      <!-- Kakkson Trishakti  -->
+      <div class="bg-gray-50 rounded-2xl shadow hover:shadow-lg overflow-hidden transition">
+        <img src="kakkson-trishakti.jpg" alt="Kakkson Trishakti " class="w-full h-48 object-cover">
+        <div class="p-5">
+          <h3 class="text-xl font-semibold text-blue-600">Kakkson Trishakti </h3>
+        <p class="text-gray-700 mt-2 leading-relaxed">
+  Kakkson Trishakti is a budget-friendly hotel located in Talcher, Odisha, offering affordable accommodations for travelers. Situated approximately 3 to 4 kilometers from the Talcher Railway Station, it provides easy access to transportation and local attractions.<br><br>
+
+  <strong>Address:</strong><br>
+  Floor No: Ground and 1st<br>
+  Building No./Flat No: Plot No 1077/3279, 1073/3312<br>
+  Name of Premises/Building: Hotel Trishakti<br>
+  Road/Street: Hatatota Road<br>
+  Locality/Sub Locality: Hatatota<br>
+  City/Town/Village: Talcher<br>
+  District: Angul<br>
+  State: Odisha<br>
+  PIN Code: 759107<br><br>
+
+  <strong>Room Options:</strong><br>
+  <ul class="list-disc list-inside">
+    <li><strong>Deluxe Non-AC Room:</strong> Spacious rooms with basic amenities, suitable for budget-conscious travelers.</li>
+    <li><strong>Deluxe AC Room:</strong> Air-conditioned rooms offering additional comfort during warmer months.</li>
+  </ul><br>
+
+  <strong>Amenities:</strong><br>
+  <ul class="list-disc list-inside">
+    <li>24-hour room service</li>
+    <li>Free Wi-Fi</li>
+    <li>Housekeeping services</li>
+    <li>Elevator/Lift</li>
+    <li>Smoking rooms available</li>
+  </ul><br>
+
+  The hotel has received mixed reviews from guests. Some have praised the affordability and location, while others have mentioned concerns regarding cleanliness and maintenance.<br><br>
+
+  For reservations or more information, you can visit their pages on 
+  <a href="https://www.makemytrip.com/hotels/" target="_blank" class="text-blue-600 hover:underline">MakeMyTrip</a> or 
+  <a href="https://www.goibibo.com/hotels/" target="_blank" class="text-blue-600 hover:underline">Goibibo</a>.
+</p>
+        </div>
+      </div>
+
+      <!-- Hotel Brundaban -->
+      <div class="bg-gray-50 rounded-2xl shadow hover:shadow-lg overflow-hidden transition">
+        <img src="hotel-brundaban.webp" alt="Hotel Brundaban" class="w-full h-48 object-cover">
+        <div class="p-5">
+          <h3 class="text-xl font-semibold text-blue-600">Hotel Brundaban</h3>
+        <p class="text-gray-700 mt-2 leading-relaxed">
+  Hotel Brundaban is a well-known budget hotel located on Hatotota Main Road in Talcher, Odisha. Situated near Ganesh Talkies, it offers convenient access to local markets and transportation hubs.<br><br>
+
+  <strong>Address:</strong><br>
+  Hatotota Main Road, Near Ganesh Talkies, Talcher, Angul, Odisha – 759100<br><br>
+
+  <strong>Facilities & Services:</strong><br><br>
+
+  <strong>Accommodation:</strong> The hotel features 9 rooms spread across two floors. Some rooms are air-conditioned, and all are equipped with basic amenities such as television, toiletries, and bath towels.<br><br>
+
+  <strong>Dining:</strong> Hotel Brundaban houses an on-site restaurant offering a variety of cuisines.<br><br>
+
+  <strong>Event Spaces:</strong> The hotel provides multiple event spaces of varying sizes and themes, including garden events, making it a popular choice for parties, weddings, and conferences.<br><br>
+
+  <strong>Additional Services:</strong> Guests can avail themselves of services like 24-hour room service, laundry, car hire, and doorstep food delivery.<br><br>
+
+  <strong>Guest Reviews:</strong><br><br>
+
+  The hotel has received mixed reviews:<br>
+  <em>Positive Feedback:</em> Guests have appreciated the spacious rooms, courteous staff, and the quality and quantity of food.<br>
+  <em>Constructive Criticism:</em> Some guests have pointed out areas for improvement, such as room cleanliness and maintenance.<br><br>
+
+  <strong>Contact Information:</strong><br>
+  Phone: <a href="tel:+916760240005" class="text-blue-600 hover:underline">06760-240005</a><br>
+  Email: <a href="mailto:brundaban.customercare@gmail.com" class="text-blue-600 hover:underline">brundaban.customercare@gmail.com</a><br><br>
+
+  For more details or to make a reservation, you can visit their official website or check availability on Yatra.
+</p>
+        </div>
+      </div>
+
+      <!-- A One Guest House
+ -->
+      <div class="bg-gray-50 rounded-2xl shadow hover:shadow-lg overflow-hidden transition">
+        <img src="a-one-guest-house.webp" alt="Yatri Nivas Talcher" class="w-full h-48 object-cover">
+        <div class="p-5">
+          <h3 class="text-xl font-semibold text-blue-600">A One Guest House
+
+</h3>
+<p class="text-gray-700 mt-2 leading-relaxed">
+  A One Guest House is a budget-friendly accommodation located in the heart of Talcher, Odisha. Situated near Bypass Chowk on NH-149, it offers convenient access to local transportation and attractions.<br><br>
+
+  <strong>Address:</strong><br>
+  Bypass Chowk, Talcher Town Road, Talcher, Odisha – 759107<br><br>
+
+  <strong>Contact Information:</strong><br>
+  Phone: <a href="tel:+919937149115" class="text-blue-600 hover:underline">+91 99371 49115</a><br>
+  Email: <a href="mailto:aonetalcher@gmail.com" class="text-blue-600 hover:underline">aonetalcher@gmail.com</a><br><br>
+
+  <strong>Facilities & Services:</strong><br><br>
+
+  <strong>Accommodation:</strong> A One Guest House offers a variety of room types, including deluxe rooms equipped with amenities such as air conditioning, television, and daily housekeeping services.<br><br>
+
+  <strong>Dining:</strong> While the guest house does not have an on-site restaurant, guests can avail room service for meals.<br><br>
+
+  <strong>Parking:</strong> Complimentary parking is available for guests.<br><br>
+
+  <strong>Pet-Friendly:</strong> The guest house welcomes pets, making it suitable for travelers with pets.<br><br>
+
+  <strong>Nearby Attractions:</strong><br><br>
+
+  <strong>Talcher Thermal Power Station:</strong> Approximately 4.2 km away, this is a significant landmark in the region.<br><br>
+
+  <strong>Jagannath Park:</strong> Located about 2.1 km from the guest house, it's a popular spot for relaxation.<br><br>
+
+  <strong>Booking Information:</strong><br><br>
+
+  For reservations, you can contact the guest house directly at the provided phone number or email. Alternatively, bookings can be made through platforms like Goibibo or Destinia.<br><br>
+
+  Please note that the guest house operates on a cash-only payment policy. It's advisable to confirm the latest amenities and availability before booking.
+</p>
+           </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="education" class="bg-gradient-to-br from-orange-200 to-yellow-300 py-12 px-6 max-w-7xl mx-auto">
+  <div class="max-w-7xl mx-auto">
+<div class="flex flex-wrap justify-center gap-6">
+<h2 class="text-4xl font-extrabold text-center bg-gradient-to-r from-indigo-600 via-purple-500 to-pink-500 text-transparent bg-clip-text drop-shadow-lg uppercase tracking-wide mt-16 mb-12">
+  Education in Talcher
+</h2>
+
+<h3 class="text-2xl font-bold text-gray-800 bg-gradient-to-r from-yellow-500 via-red-500 to-pink-500 text-transparent bg-clip-text drop-shadow-sm uppercase tracking-wide mt-10 mb-8">
+  🏫 Schools
+</h3>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+
+      <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden flex flex-col">
+        <img src="dav_public_school_thermal.jpeg" alt="DAV Public School, NTPC Talcher Thermal" class="w-full h-full object-cover">
+        <div class="p-6 flex flex-col flex-grow">
+          <p><strong class="text-gray-900 font-semibold">DAV Public School, NTPC Talcher Thermal:</strong> DAV Public School, NTPC Talcher Thermal
+Located within the NTPC Talcher Thermal township.
+Established to serve the educational needs of employees’ children.
+Affiliated to the Central Board of Secondary Education (CBSE).
+Offers classes from Grade I to XII in English medium.
+Focuses on academic excellence, discipline, and all-round development.
+Well-equipped with labs, library, and sports facilities.
+</p>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden flex flex-col">
+        <img src="st_johns.jpeg" alt="St. John's School, Angarua" class="w-full h-full object-cover">
+        <div class="p-6 flex flex-col flex-grow">
+          <p><strong class="text-gray-900 font-semibold">St. John's School, Angarua: </strong> St. John's School, Angarua, Talcher, Odisha, is a CBSE-affiliated co-educational English-medium school established in 2010.
+It offers classes from Nursery to XII with around 300 students and a 25:1 student-teacher ratio.
+The school provides smart classrooms, science and computer labs, sports facilities, and an auditorium.
+It is run by the Catholic Diocese of Sambalpur, focusing on quality and value-based education.
+The campus includes a library, music and dance rooms, and transport services.
+The principal is Valsa T J, and the school is located near the BSNL Office, Angarua.
+For details, visit www.stjohnstalcher.in or call 06760-241080.
+</p>
+        </div>
+      </div>
+
+
+      <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden flex flex-col">
+        <img src="little_angels.webp" alt="Little Angels' Nursery School" class="w-full h-full object-cover">
+        <div class="p-6 flex flex-col flex-grow">
+          <p><strong class="text-gray-900 font-semibold">Little Angels' Nursery School:</strong> Little Angels Nursery School in Talcher is a well-regarded early childhood education center.  It offers programs for playgroup, nursery, and kindergarten levels, focusing on nurturing young minds.  The school emphasizes holistic development through various activities and celebrations.  Events like annual functions and Christmas celebrations are organized to engage children and showcase their talents.  The institution is active on social media platforms, sharing updates and glimpses of school events.  Located in Talcher, Odisha, it serves the local community by providing quality early education.</p>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden flex flex-col">
+        <img src="adarsha_vidyalaya.webp" alt="Odisha Adarsha Vidyalaya, Mahulapal" class="w-full h-full object-cover">
+        <div class="p-6 flex flex-col flex-grow">
+          <p><strong class="text-gray-900 font-semibold">Odisha Adarsha Vidyalaya, Mahulapal:</strong> Odisha Adarsha Vidyalaya, Mahulapal, Talcher, was established in 2022 under the CBSE board.
+It offers English-medium education from Class VI to XII with Science stream options (PCM & PCB).
+The school has around 107 students and maintains a 27:1 student-teacher ratio.
+Spread over 17,563 sq. meters, it has 18 classrooms and modern infrastructure.
+OAV Mahulapal focuses on academics as well as co-curricular activities like debates, sports, and educational tours.
+It is part of the Odisha government’s model school initiative for quality rural education.</p>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden flex flex-col">
+        <img src="colliery_high_school.webp" alt="Colliery High School, Dera" class="w-full h-full object-cover">
+        <div class="p-6 flex flex-col flex-grow">
+          <p><strong class="text-gray-900 font-semibold">Colliery High School, Dera:</strong> Colliery High School, located in Dera, Talcher, Angul district, Odisha, is a government-run co-educational institution established in 1966.  The school offers classes from VI to X and is managed under the Department of Education.  With a student enrollment of 314 and 13 teachers, it maintains a student-teacher ratio of approximately 24:1.  The campus comprises 22 classrooms and 10 other rooms, equipped with facilities like a library, drinking water, hand wash stations, and digital boards.  The school operates in a rural setting and is situated in the Ghantapada NHS area of Talcher, with the postal code 759103.</p>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden flex flex-col">
+        <img src="Government_girl_high_school.webp" alt="Government Girls' High School, Talcher" class="w-full h-full object-cover">
+        <div class="p-6 flex flex-col flex-grow">
+          <p><strong class="text-gray-900 font-semibold">Government Girls' High School, Talcher:</strong> Government Girls' High School, Talcher, established in 1961, is a government-run institution managed by the Department of Education.  Located in Ward No. 05 of Talcher, Angul district, Odisha (PIN 759107), the school offers education exclusively for girls from Class VI to X.  With a total enrollment of 192 students and 11 teachers, it maintains a student-teacher ratio of approximately 17:1.  The school comprises 7 classrooms and 2 additional rooms, providing facilities such as a library, reading corner, book bank, and functional digital boards.  While it lacks internet connectivity, it ensures basic amenities like drinking water and hand wash stations.  The institution operates in an urban setting and is part of the state's initiative to promote girls' education.</p>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden flex flex-col">
+        <img src="st_xavier.webp" alt="St. Xavier's School, Palasagadia" class="w-full h-full object-cover">
+        <div class="p-6 flex flex-col flex-grow">
+          <p><strong class="text-gray-900 font-semibold" >St. Xavier's School, Palasagadia:</strong> St. Xavier's High School, located in Palasagadia, Talcher, Angul district, Odisha, is a co-educational English-medium institution affiliated with the Central Board of Secondary Education (CBSE).  The school is part of the St. Xavier's group, which operates multiple branches across Odisha and neighboring states.  Known for its emphasis on holistic development, the school integrates academics with co-curricular activities, fostering an environment conducive to learning and personal growth.  The institution has garnered positive feedback from the local community, highlighting its commitment to quality education</p>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden flex flex-col">
+        <img src="handidhua_high_school.jpeg" alt="Handidhua High School, Talcher" class="w-full h-full object-cover">
+        <div class="p-6 flex flex-col flex-grow">
+          <p><strong class="text-gray-900 font-semibold">Handidhua High School, Talcher:</strong> Handidhua High School, located in Ward No. 19 of Talcher, Angul district, Odisha (PIN 759100), is a government-run co-educational institution established in 1966.  The school offers education from classes VI to X and is managed under the Department of Education.  With a total enrollment of 242 students and 13 teachers, it maintains a student-teacher ratio of approximately 19:1.  The campus comprises 22 classrooms and 10 additional rooms, providing facilities such as a library, drinking water, hand wash stations, and digital boards.  The school operates in an urban setting and is situated in the Deulabera Colliery NHS area of Talcher.</p>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden flex flex-col">
+        <img src="ghantapada_high_school.jpeg" alt="Ghantapada High School" class="w-full h-full object-cover">
+        <div class="p-6 flex flex-col flex-grow">
+          <p><strong class="text-gray-900 font-semibold">Ghantapada High School:</strong> Ghantapada High School, established in 1982, is a co-educational government institution located in Ghantapada, Talcher, Angul district, Odisha.  The school offers classes from VIII to X and operates under the Department of Education.  It was founded through the collective efforts of the local community, aiming to provide quality education in the region.  The school is situated in the Talcher block and is part of the Ghantapada Gram Panchayat. </p>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden flex flex-col">
+        <img src="jubraj_high_school.webp" alt="Jubaraj High School" class="w-full h-full object-cover">
+        <div class="p-6 flex flex-col flex-grow">
+          <p><strong class="text-gray-900 font-semibold">Jubaraj High School:</strong> Jubaraj High School, Talcher, is one of the oldest government schools in Angul district, Odisha, established in 1913.
+It offers education from classes VI to X under the Department of Education.
+The school teaches mainly in the Odia medium and serves local students.
+It has around 4 classrooms and 1 computer for students' use.
+Facilities include a library with over 6,600 books, electricity, and a boundary wall for safety.
+Basic amenities like tap water and ramps for differently-abled students are available.
+The school runs a mid-day meal program to support student nutrition.
+Though it lacks a playground and separate head teacher’s room, it is supported by NTPC Talcher Thermal Power Station with donations of furniture.
+The school focuses on providing quality education with community support.</p>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden flex flex-col">
+        <img src="dav_girls_high_school.jpeg" alt="DAV Girls High School, CWS Talcher" class="w-full h-full object-cover">
+        <div class="p-6 flex flex-col flex-grow">
+          <p><strong class="text-gray-900 font-semibold" >DAV Girls High School, CWS Talcher:</strong> DAV Girls' High School, CWS, Talcher, is a government-recognized school managed by MCL and DAV College Managing Committee.
+It offers education from Class VI to X with Odia as the medium of instruction.
+The school has around 164 students and 12 teachers.
+There are 8 classrooms, a library, and 9 functional computers.
+Sanitation facilities include separate toilets for girls and children with special needs.
+The school provides drinking water and hand wash stations but lacks internet connectivit</p>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden flex flex-col">
+        <img src="talcher_public_school.webp" alt="Talcher Public School" class="w-full h-full object-cover">
+        <div class="p-6 flex flex-col flex-grow">
+          <p><strong class="text-gray-900 font-semibold">Talcher Public School:</strong> Talcher Public School, located in Talcher, Angul district, Odisha, was established in 1996.
+It offers education from Class I to VII with Odia as the medium of instruction.
+The school has around 86 students and 11 teachers.
+There are 8 classrooms and a library available for students.
+The school provides computer facilities with laptops and desktops.
+Sanitation includes separate toilets for boys, girls, and children with special needs.
+Drinking water and hand wash facilities are also available for students.
+
+</p>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden flex flex-col">
+        <img src="ssvm_talcher.webp" alt="Saraswati Sishu Mandir, Brahmanivihar" class="w-full h-full object-cover">
+        <div class="p-6 flex flex-col flex-grow">
+          <p><strong class="text-gray-900 font-semibold">Saraswati Sishu Mandir, Brahmanivihar:</strong> Saraswati Sishu Mandir, Brahmin Bihar, is a co-educational school located in Talcher, Angul district, Odisha.
+The school was established in 1990 and is managed under Vidya Bharati Akhil Bharatiya Shiksha Sansthan.
+It offers education from Class I to Class X following the Odisha Board of Secondary Education curriculum.
+The medium of instruction at the school is Odia.
+Saraswati Sishu Mandir focuses on providing value-based education along with academics.
+The school is well-known in the local community for its emphasis on cultural and moral education.
+Students participate in various extracurricular activities alongside their studies.
+The school infrastructure supports a good learning environment for children.
+It aims to prepare students both academically and morally for future challenges.</p>
+        </div>
+      </div>
+<div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden flex flex-col">
+        <img src="ssvm_deulbera.jpeg" alt="Saraswati Sishu Mandir, Deulbera Colliery,Talcher" class="w-full h-40 object-cover">
+        <div class="p-6 flex flex-col flex-grow">
+          <p><strong class="text-gray-900 font-semibold">Saraswati Sishu Mandir, Deulbera Colliery,Talcher :</strong> Saraswati Shishu Vidya Mandir, Deulabera Colliery, Talcher, is a co-educational private school established in 1993.  Located in Ward No. 14 of Deulabera Colliery NHS, Talcher, Angul district, Odisha (PIN 759102), the school offers classes from I to VIII.  With a total enrollment of 681 students and 28 teachers, it maintains a student-teacher ratio of approximately 24:1.  The school comprises 19 classrooms and 3 additional rooms, providing basic facilities such as drinking water, hand wash stations, and a library.  However, it lacks digital infrastructure like computers, internet connectivity, and digital boards.  The institution is recognized by the Odisha Board of Secondary Education and operates under the management of Vidya Bharati Akhil Bharatiya Shiksha Sansthan.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Colleges -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+   <h3 class="text-2xl font-bold text-gray-800 bg-gradient-to-r from-yellow-500 via-red-500 to-pink-500 text-transparent bg-clip-text drop-shadow-sm uppercase tracking-wide mb-8">🎓 Colleges</h3>
+      <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden flex flex-col">
+        <img src="talcher_autonomous_college.webp" alt="Talcher College" class="w-full h-full object-cover">
+        <div class="p-6 flex flex-col flex-grow">
+          <p><strong class="text-gray-900 font-semibold" >Talcher Automonus College:</strong>Talcher Autonomous College, established in 1969 in Talcher, Odisha, began as a tutorial college and has since evolved into a prominent institution offering undergraduate and postgraduate programs in Arts, Science, and Commerce  . Affiliated with Utkal University and recognized by the University Grants Commission (UGC), the college operates on a 31.945-acre urban campus  . It offers a range of courses, including B.A., B.Sc., B.Com., and M.A. in Odia, catering to diverse academic interests  . The institution provides facilities such as separate hostels for boys and girls, laboratories, a library, and sports amenities to support student development  . With a commitment to quality education, Talcher Autonomous College continues to contribute significantly to higher education in the region. 
+
+</p>
+        </div>
+      </div>
+
+
+      <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden flex flex-col">
+        <img src="nhms.webp" alt="NHM College, Talcher" class="w-full h-full object-cover">
+        <div class="p-6 flex flex-col flex-grow">
+          <p><strong class="text-gray-900 font-semibold">Pabitra Mohan Pradhan Medical College:</strong> Pabitra Mohan Pradhan Medical College and Hospital (PMPMCH), located in Talcher, Odisha, is a government medical institution established to enhance healthcare and medical education in the region. Previously known as Mahanadi Institute of Medical Science and Research (MIMSAR), the college is funded by Mahanadi Coalfields Limited (MCL) and is affiliated with the Odisha University of Health Sciences. It offers the MBBS course with an annual intake of 100 students, selected through the NEET examination. The college is equipped with a 500-bed multi-specialty hospital that provides practical training and quality healthcare services. PMPMCH is a significant step towards strengthening the medical infrastructure in Angul district. The institution is expected to commence MBBS admissions from the 2025–26 academic session, contributing to the development of skilled medical professionals in Odisha</p>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden flex flex-col">
+        <img src="govt_polytechnic.jpg" alt="Government Polytechnic, Talcher" class="w-full h-full object-cover">
+        <div class="p-6 flex flex-col flex-grow">
+          <p><strong class="text-gray-900 font-semibold" >Government Polytechnic,Angul:</strong> Government Polytechnic, Angul, located near Talcher in Odisha, is a premier technical institute dedicated to the holistic development of its students. Affiliated with the State Council for Technical Education and Vocational Training (SCTE & VT), Odisha, and approved by the All India Council for Technical Education (AICTE), it offers diploma programs in various engineering disciplines. The institute emphasizes a blend of traditional and digital teaching methods to equip students with both theoretical knowledge and practical skills. Facilities include well-equipped laboratories, a library, separate hostels for boys and girls, and a cafeteria. Government Polytechnic, Angul, also fosters industry-institute interactions to prepare students for real-world challenges. The college's mission is to provide technical education that molds students into competent technocrats based on the needs of society and industry.</p>
+        </div>
+      </div>
+<div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden flex flex-col">
+        <img src="vasudev.jpeg" alt=" Vasudev +2 Science (Junior) College, Handidhua"class="w-full h-full object-cover">
+        <div class="p-6 flex flex-col flex-grow">
+          <p><strong class="text-gray-900 font-semibold">Vasudev +2 Science (Junior) College, Handidhua:</strong>Vasudev +2 Science College is located in Handidhua, Talcher, Odisha. It offers higher secondary (+2) education specifically in the Science stream. The college is affiliated with the Council of Higher Secondary Education (CHSE), Odisha. It provides good facilities, including a science lab, library, and extracurricular activities. The college aims to prepare students for higher education and professional courses. It is easily accessible via Talcher Railway Station Road. Vasudev +2 Science College focuses on overall student development through academics and activities.
+
+</p>
+</div>
+</div>
+<div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden flex flex-col">
+        <img src="godtal.webp" alt=" Vasudev +2 Science (Junior) College, Handidhua"class="w-full h-full object-cover">
+        <div class="p-6 flex flex-col flex-grow">
+          <p><strong class="text-gray-900 font-semibold">Godtal Regional Junior College:</strong>Godtal Regional Junior College, located in Santhapada, Talcher, Odisha, is a co-educational institution offering +2 (Intermediate) education in Science and Arts streams.  Established in 1996, the college is situated in the Talcher Thermal area, serving the educational needs of students from the surrounding regions.  The institution is affiliated with the Council of Higher Secondary Education (CHSE), Odisha, and is recognized by the University Grants Commission (UGC) under sections 2(f) and 12(B) of the UGC Act, 1956.  The college provides a range of facilities, including a library, laboratories, and sports amenities, to support the academic and extracurricular development of its students.  Admissions are merit-based, considering the marks obtained in the 10th-grade examinations, and the application process typically follows the academic calendar of CHSE, Odisha.</p>
+</div>
+</div>
+<div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden flex flex-col">
+  <img src="iti.jpeg" alt="ITI Talcher" class="w-full h-full object-cover">
+  <div class="p-6 flex flex-col flex-grow">
+    <p>
+      <strong class="text-gray-900 font-semibold">Industrial Training Institute (ITI), Talcher:</strong>
+      ITI Talcher is a government vocational training institute located in Talcher, Odisha. It offers various technical and trade courses aimed at skill development for students and apprentices. The institute provides hands-on training in fields like electrician, fitter, welder, and more. ITI Talcher is affiliated with the Directorate General of Training (DGT) and prepares students for industry-ready careers. The institute has well-equipped workshops and qualified trainers. Admissions are based on merit and entrance criteria set by the state vocational training board. ITI Talcher plays a vital role in promoting technical education and employability in the region.
+    </p>
+  </div>
+</div>
+
+<div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden flex flex-col mt-6">
+  <img src="pmit.webp" alt="PMIT Talcher" class="w-full h-full object-cover">
+  <div class="p-6 flex flex-col flex-grow">
+    <p>
+      <strong class="text-gray-900 font-semibold">PMIT Talcher (Pabitra Mohan Institute of Technology):</strong>
+      PMIT Talcher is a technical institute in Talcher offering diploma and certificate courses in engineering and technology fields. It focuses on practical and industry-oriented education to prepare students for technical careers. The institute is equipped with modern laboratories, classrooms, and workshop facilities. PMIT Talcher is affiliated with the State Council for Technical Education and Vocational Training (SCTE & VT), Odisha. It supports skill development and entrepreneurship among youth in the Talcher region. Admissions are conducted as per the guidelines of the SCTE & VT Odisha. The institute contributes significantly to the technical workforce of the area.
+    </p>
+  </div>
+</div>
+
+    </div>
+  </div>
+</section>
+<section class="mt-24 px-4 md:px-20" id="Hospitals">
+  <h2 class="text-5xl font-extrabold text-center text-rose-700 mb-14 tracking-wide drop-shadow-md">Hospitals in Talcher</h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"><!-- Hospital Card Template -->
+<div class="bg-gradient-to-br from-white to-rose-50 p-6 rounded-3xl shadow-2xl transition-transform duration-300 hover:scale-105 hover:shadow-pink-300 border border-rose-200">
+  <img src="mcl_hospital .jpeg" alt="MCL Central Hospital" class="w-full h-48 object-cover rounded-2xl mb-5 shadow-md">
+  <h3 class="text-2xl font-bold text-gray-900 mb-2 font-serif">Mahanadi Coalfields Hospital (Central Hospital)</h3>
+  <p class="text-gray-700 leading-relaxed text-[17px]">Mahanadi Coalfields Limited (MCL) Central Hospital, also called Nehru Shatabdi Central Hospital, is located in Talcher, Odisha. It is a 500-bed facility serving MCL employees and the local community. The hospital offers specialized departments like General Medicine, Surgery, Orthopedics, Pediatrics, and more. It provides modern diagnostic services and 24/7 emergency care. During the COVID-19 pandemic, it operated a dedicated COVID care unit. The hospital plays a key role in regional healthcare. Contact numbers include +91 94372 57804 for inquiries.
+
+</p>
+</div>
+
+<div class="bg-gradient-to-br from-white to-rose-50 p-6 rounded-3xl shadow-2xl transition-transform duration-300 hover:scale-105 hover:shadow-pink-300 border border-rose-200">
+  <img src="pmp_medical.webp" alt="PMP Medical College" class="w-full h-48 object-cover rounded-2xl mb-5 shadow-md">
+  <h3 class="text-2xl font-bold text-gray-900 mb-2 font-serif">Pabitra Mohan Pradhan Medical College & Hospital</h3>
+  <p class="text-gray-700 leading-relaxed text-[17px]">Pabitra Mohan Pradhan Government Hospital in Talcher is a 500-bed multi-specialty facility named after the freedom fighter and former Deputy Chief Minister of Odisha, Pabitra Mohan Pradhan. The hospital serves as the teaching hospital for the associated medical college. It offers modern diagnostic and treatment services in departments like General Medicine, Surgery, Obstetrics, and Pediatrics. Equipped with advanced operation theatres and 24/7 emergency care, the hospital ensures comprehensive patient care. It has well-equipped labs, imaging centers, and pharmacy services supported by skilled medical and nursing staff. The hospital was inaugurated by Odisha Chief Minister Naveen Patnaik in December 2023. It plays a vital role in improving healthcare in Talcher and surrounding regions.
+</p>
+</div>
+
+
+<div class="bg-gradient-to-br from-white to-rose-50 p-6 rounded-3xl shadow-2xl transition-transform duration-300 hover:scale-105 hover:shadow-pink-300 border border-rose-200">
+  <img src="ss_hospital.webp" alt="SS Hospital" class="w-full h-80 object-cover rounded-2xl mb-5 shadow-md">
+  <h3 class="text-2xl font-bold text-gray-900 mb-2 font-serif">S.S. Hospital</h3>
+  <p class="text-gray-700 leading-relaxed text-[17px]">S.S. Hospital Talcher is a renowned healthcare facility located in Talcher Thermal, Angul district, Odisha.  Established to provide comprehensive medical services, the hospital specializes in obstetrics, gynecology, and fertility treatments.  It is recognized as the only Test Tube Baby Centre in central Odisha, offering advanced reproductive technologies.  Under the leadership of Dr. Susmita Sahoo, a distinguished member of the World Association of Laparoscopic Surgeons, the hospital has conducted over 10,000 successful deliveries and gynecological surgeries.  The facility is equipped with modern ultrasound and diagnostic equipment, ensuring accurate and timely medical assessments.  S.S. Hospital is committed to providing high-quality, affordable, and accessible healthcare services to the community.</p>
+</div>
+
+<div class="bg-gradient-to-br from-white to-rose-50 p-6 rounded-3xl shadow-2xl transition-transform duration-300 hover:scale-105 hover:shadow-pink-300 border border-rose-200">
+  <img src="jbr.jpg" alt="JBR Hospital" class="w-full h-48 object-cover rounded-2xl mb-5 shadow-md">
+  <h3 class="text-2xl font-bold text-gray-900 mb-2 font-serif">JBR Hospital</h3>
+  <p class="text-gray-700 leading-relaxed text-[17px]">JBR Hospital, located in Dera Colliery Township, Talcher, Odisha, is a NABH-accredited healthcare facility known for its quality medical services. It provides comprehensive care including general surgery, outpatient consultations, and inpatient treatments. The hospital operates a 24/7 emergency department to handle urgent cases effectively. Equipped with advanced medical equipment, it ensures accurate diagnosis and effective treatment. The hospital is fully wheelchair accessible, promoting ease of access for all patients. JBR Hospital emphasizes patient safety, hygiene, and comfort. It has a skilled team of doctors, nurses, and support staff dedicated to delivering compassionate care. The hospital also offers facilities like pharmacy and diagnostic labs. Located near Indian Oil Petrol Pump, it is easily reachable for people from Talcher and nearby areas. JBR Hospital plays a vital role in improving healthcare services in the region.
+</p>
+</div>
+
+<div class="bg-gradient-to-br from-white to-rose-50 p-6 rounded-3xl shadow-2xl transition-transform duration-300 hover:scale-105 hover:shadow-pink-300 border border-rose-200">
+  <img src="ashalok.webp" alt="NTPC Ashalok Hospital" class="w-full h-48 object-cover rounded-2xl mb-5 shadow-md">
+  <h3 class="text-2xl font-bold text-gray-900 mb-2 font-serif">NTPC Ashalok Hospital</h3>
+  <p class="text-gray-700 leading-relaxed text-[17px]">Ashalok Hospital is a healthcare facility located within the NTPC Talcher Thermal Power Station campus in Angul district, Odisha.  Established in 1967, it began as an outpatient department and has since expanded to become a 25-bed hospital.  The hospital offers a range of medical services, including an occupational health unit, ICU, advanced operating theatre, radiology with X-ray facilities, pharmacy, pathology lab, and emergency services.  It also provides dental and burn care units.  Ashalok Hospital is part of NTPC's commitment to employee welfare and community health.  In recent years, the hospital has integrated technology into healthcare by installing a state-of-the-art digital health kiosk, enhancing access to health checks and wellness resources for employees and their families.</p>
+</div>
+
+  </div>
+</section>
+<!-- Talcher Coalfield Section with Tailwind CSS Cards and Animation -->
+<section id="talcher-coalfield" class="bg-gradient-to-br from-orange-500 to-yellow-300 py-12 px-6 max-w-7xl mx-auto">
+<h1 class="text-4xl font-extrabold text-white text-center mb-4 animate-fadeIn">
+    Economic Development of Talcher
+  </h1>
+  <h2 class="text-3xl font-bold text-blue-900 border-b-4 border-blue-600 pb-2 mb-8 text-center animate-fadeIn">
+    Talcher Coalfield: The Energy Heart of Odisha
+  </h2>
+
+  <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+
+    <!-- Overview Card -->
+    <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300 animate-fadeIn delay-100">
+      <h3 class="text-xl font-semibold mb-3 text-blue-800">Overview</h3>
+      <p class="text-gray-700 leading-relaxed">
+        Talcher Coalfield, situated in the Angul district of Odisha, is the largest coal reserve in India with estimated coal deposits exceeding 38 billion tonnes. Covering nearly 500 square kilometers, this coalfield forms a critical pillar of India’s energy infrastructure. It fuels many thermal power plants and industries, making it indispensable to the nation’s economic and energy growth.
+      </p>
+    </div>
+
+    <!-- Historical Background Card -->
+    <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300 animate-fadeIn delay-200">
+      <h3 class="text-xl font-semibold mb-3 text-blue-800">Historical Background</h3>
+      <p class="text-gray-700 leading-relaxed">
+        Coal mining in Talcher dates back to the 19th century, with the first coal discovery at Gopalprasad in 1837. The region’s coal production accelerated significantly under the National Coal Development Corporation (NCDC) and later Mahanadi Coalfields Limited (MCL), a subsidiary of Coal India Limited.
+      </p>
+    </div>
+
+    <!-- Major Mining Locations Card -->
+    <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300 animate-fadeIn delay-300">
+      <h3 class="text-xl font-semibold mb-3 text-blue-800">Major Mining Locations</h3>
+      <p class="text-gray-700 leading-relaxed mb-2">
+        Talcher Coalfield is divided into five main operational areas, each hosting several key mines:
+      </p>
+      <ul class="list-disc list-inside text-gray-700 leading-relaxed space-y-2">
+        <li><strong>Bharatpur Area:</strong> One of the largest open-cast mining zones, undergoing expansion to increase production capacity to 20 million tonnes per annum (MTPA).</li>
+        <li><strong>Jagannath Area:</strong> Known for both open-cast and underground mining operations, supplying significant coal volumes.</li>
+        <li><strong>Lingaraj Area:</strong> Contains several open-cast mines supporting nearby power plants.</li>
+        <li><strong>Kalinga Area:</strong> Comprises multiple mines focused on sustainable mining practices.</li>
+        <li><strong>Hingula Area:</strong> Houses some of the older mining sites, now being modernized and revived.</li>
+      </ul>
+      <p class="text-gray-700 leading-relaxed mt-4">
+        These locations are strategically connected by rail and road networks facilitating coal dispatch to power plants and industries nationwide.
+      </p>
+<div class="mt-6 text-center">
+    <img src="hingula_mines.jpeg" alt="Talcher Mining Site" class="w-full max-h-80 object-cover rounded-lg shadow-md transition-transform duration-300 hover:scale-105">
+    <p class="text-sm text-gray-600 mt-2 italic">View of hingula mine</p>
+  </div>
+<div class="mt-6 text-center">
+    <img src="lingaraj_mines.jpeg" alt="Talcher Mining Site" class="w-full max-h-80 object-cover rounded-lg shadow-md transition-transform duration-300 hover:scale-105">
+    <p class="text-sm text-gray-600 mt-2 italic">View of lingaraj mine</p>
+  </div>
+<div class="mt-6 text-center">
+    <img src="kalinga_mines.jpeg" alt="Talcher Mining Site" class="w-full max-h-80 object-cover rounded-lg shadow-md transition-transform duration-300 hover:scale-105">
+    <p class="text-sm text-gray-600 mt-2 italic">View of kalinga mine</p>
+  </div>
+<div class="mt-6 text-center">
+    <img src="bharatpur_mines.jpeg" alt="Talcher Mining Site" class="w-full max-h-80 object-cover rounded-lg shadow-md transition-transform duration-300 hover:scale-105">
+    <p class="text-sm text-gray-600 mt-2 italic">View of bharatpur mine</p>
+  </div>
+    </div>
+
+    <!-- Mining Operations and Capacity Card -->
+    <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300 animate-fadeIn delay-400">
+      <h3 class="text-xl font-semibold mb-3 text-blue-800">Mining Operations and Capacity</h3>
+      <p class="text-gray-700 leading-relaxed">
+        The coalfield operates through these areas using advanced open-cast and underground mining techniques. Daily coal dispatches from Talcher exceed 100,000 tonnes, supplying power plants across multiple states including Odisha, West Bengal, Andhra Pradesh, and Tamil Nadu.
+      </p>
+    </div>
+
+    <!-- Coal Quality and Usage Card -->
+    <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300 animate-fadeIn delay-500">
+      <h3 class="text-xl font-semibold mb-3 text-blue-800">Coal Quality and Usage</h3>
+      <p class="text-gray-700 leading-relaxed">
+        Talcher coal is classified as medium to low grade, containing approximately 35% fixed carbon, 70% volatile matter, and 25% ash. Despite its lower grade, it remains a vital fuel source for thermal power generation due to its abundant availability and consistent supply.
+      </p>
+    </div>
+
+    <!-- Infrastructure and Connectivity Card -->
+    <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300 animate-fadeIn delay-600">
+      <h3 class="text-xl font-semibold mb-3 text-blue-800">Infrastructure and Connectivity</h3>
+      <p class="text-gray-700 leading-relaxed">
+        Efficient transportation is ensured by a dedicated railway line connecting Talcher to the east coast via Nergundi, operational since 1922. Ongoing infrastructure upgrades aim to enhance rail and road connectivity, facilitating smoother coal transportation to thermal power stations and industrial zones.
+      </p>
+    </div>
+
+    <!-- Recent Developments & Sustainability Efforts Card -->
+    <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300 animate-fadeIn delay-700">
+      <h3 class="text-xl font-semibold mb-3 text-blue-800">Recent Developments & Sustainability Efforts</h3>
+      <ul class="list-disc list-inside text-gray-700 leading-relaxed space-y-2">
+        <li><strong>Bharatpur Expansion:</strong> Capacity increase to 20 MTPA is underway to support India’s energy requirements.</li>
+        <li><strong>Revival of Underground Mines:</strong> MCL has initiated projects to reopen old underground mines in Talcher to promote eco-friendly and efficient coal extraction methods.</li>
+        <li><strong>Ash Utilization:</strong> Talcher coal plants have achieved near 100% ash utilization, converting coal ash into cement and construction materials, reducing environmental waste.</li>
+        <li><strong>Land Reclamation & Eco Initiatives:</strong> Ongoing efforts in land reclamation, afforestation, and water management help mitigate mining impacts on the environment.</li>
+        <li><strong>Community Development:</strong> Mining projects incorporate local employment generation, skill development programs, and infrastructure improvements to uplift the regional economy.</li>
+      </ul>
+    </div>
+
+    <!-- Economic and Social Impact Card -->
+    <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300 animate-fadeIn delay-800 md:col-span-2 lg:col-span-3">
+      <h3 class="text-xl font-semibold mb-3 text-blue-800">Economic and Social Impact</h3>
+      <p class="text-gray-700 leading-relaxed">
+        Talcher Coalfield is a cornerstone of Odisha’s industrial landscape. It directly employs thousands and indirectly supports many more through ancillary industries and services. Its coal feeds power plants that supply electricity to millions, contributing to national development. The region’s growth is closely tied to the sustainable development and modernization of the coalfield.
+      </p>
+    </div>
+
+  </div>
+</section>
+<section id="plants" class="py-12 bg-gradient-to-b from-orange-400 to-yellow-300">
+  <div class="container mx-auto px-4">
+    <h2 class="text-3xl md:text-4xl font-bold text-center text-white mb-8 animate-fade-in-up">Major Industrial Plants in Talcher</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+      <!-- Plant Card 1 -->
+      <div class="bg-white rounded-2xl shadow-xl p-6 animate-fade-in-up">
+        <h3 class="text-xl font-bold text-blue-800 mb-3">NTPC Talcher Super Thermal Power Station (Kaniha)</h3>
+     <div class="mt-6 text-center">
+    <img src="ntpc_kaniha.jpeg" alt="Talcher Mining Site" class="w-full max-h-80 object-cover rounded-lg shadow-md transition-transform duration-300 hover:scale-105">
+    <p class="text-sm text-gray-600 mt-2 italic">NTPC Kaniha</p>
+  </div>
+        <p class="text-gray-700 leading-relaxed mt-4">
+        <strong>Introduction:</strong> NTPC Talcher Kaniha is a flagship coal-fired power station operated by NTPC Limited. Located in Kaniha, Angul district of Odisha, this plant was commissioned between 1995 and 2005 and plays a critical role in meeting the power needs of eastern and southern India.
+      </p>
+
+      <p class="text-gray-700 leading-relaxed mt-4" >
+        <strong>Location & Capacity Overview:</strong> It is situated in Kaniha, Angul, Odisha, with a capacity of 3,010 MW (6 × 500 MW units). It uses coal from Mahanadi Coalfields Ltd and water from the Samal Barrage on the Brahmani River. The operator is NTPC Limited.
+      </p>
+
+      <p class="text-gray-700 leading-relaxed mt-4">
+        <strong>Technological Excellence:</strong> The station features subcritical and supercritical boilers, FGD units, ESPs, and once-through cooling systems. It is linked to the Talcher-Kolar HVDC corridor for long-range power transmission.
+      </p>
+
+      <p  class="text-gray-700 leading-relaxed mt-4">
+        <strong>Coal Supply & Logistics:</strong> Coal is sourced from the nearby Lingraj and Kaniha blocks and delivered by rail and conveyor systems. NTPC maintains a robust backup system to deal with logistics or strike-related issues.
+      </p>
+
+      <p class="text-gray-700 leading-relaxed mt-4">
+        <strong>Environmental Management:</strong> The plant has achieved 100% fly ash utilization. It uses modern pollution control like FGD and electrostatic precipitators and practices water-saving techniques such as rainwater harvesting.
+      </p>
+
+      <p class="text-gray-700 leading-relaxed mt-4">
+        <strong>Social Responsibility & Community Engagement:</strong> NTPC supports nearby communities through healthcare, education, skills training, tree plantation, and local employment opportunities. Its CSR programs empower sustainable development.
+      </p>
+
+      <p class="text-gray-700 leading-relaxed mt-4">
+        <strong>Strategic & Economic Importance:</strong> The power station supplies electricity to multiple Indian states and helps stabilize the national grid. It is vital for India’s energy independence and development.
+      </p>
+
+      <p class="text-gray-700 leading-relaxed mt-4">
+        <strong>Future Outlook & Upgrades:</strong> NTPC is upgrading systems for greater efficiency and reduced emissions. Plans include biomass co-firing and future use of ultra-supercritical technologies for cleaner energy.
+      </p>
+
+      <p class="text-gray-700 leading-relaxed mt-4">
+        <strong>Challenges:</strong> The station faces challenges like coal quality variability, regulatory changes, and the transition toward cleaner energy sources. NTPC addresses these with innovation and compliance.
+      </p>
+
+      <p class="text-gray-700 leading-relaxed mt-4">
+        <strong>Conclusion:</strong> NTPC Talcher Kaniha remains a pillar in India’s power infrastructure. It blends technology, efficiency, and sustainability while powering millions of homes and businesses across the country.
+      </p>
+      </div>
+
+      <!-- Plant Card 2 -->
+      <div class="bg-white rounded-2xl shadow-xl p-6 animate-fade-in-up delay-100">
+        <h3 class="text-xl font-bold text-blue-800 mb-3">Talcher Thermal Power Station (TTPS)</h3>
+          <div class="mt-6 text-center">
+    <img src="Talcher Thermal Power Station .jpeg" alt="Talcher Mining Site" class="w-full max-h-80 object-cover rounded-lg shadow-md transition-transform duration-300 hover:scale-105">
+    <p class="text-sm text-gray-600 mt-2 italic">Talcher Thermal Power Station </p>
+  </div>
+        <p class="text-gray-700 leading-relaxed mt-4">
+    <strong>Introduction:</strong> Talcher Thermal Power Station (TTPS) was a historic coal-based power plant located in the industrial town of Talcher, Angul district, Odisha. Established in 1968, it was initially operated by the Government of Odisha. In 1995, ownership was transferred to NTPC Limited as part of a revival plan, marking one of the earliest cases of a state-run plant being successfully turned around by a central PSU.
+  </p>
+
+  <p class="text-gray-700 leading-relaxed mt-4">
+    <strong>Installed Capacity:</strong> At the time of its peak operation, TTPS had a total installed capacity of <strong>460 MW</strong>:
+    <ul class="list-disc ml-6 mt-2">
+      <li>4 units × 60 MW each (Stage I - originally commissioned in 1968)</li>
+      <li>2 units × 110 MW each (Stage II - added in the 1980s)</li>
+      <li>2 units × 120 MW each (Stage III - commissioned before NTPC takeover)</li>
+    </ul>
+  </p>
+
+  <p class="text-gray-700 leading-relaxed mt-4">
+    <strong>Coal Supply & Logistics:</strong> Coal was primarily sourced from the Bharatpur and Lingaraj mines of Mahanadi Coalfields Ltd (MCL), located nearby in Talcher. The proximity to coal mines reduced transportation costs and made the plant economically viable. The coal was transported via dedicated rail sidings directly into the plant's bunkers.
+  </p>
+
+  <p class="text-gray-700 leading-relaxed mt-4">
+    <strong>Water Supply:</strong> The Brahmani River, through the Samal Barrage, was the main source of water. Water was used for boiler feed, cooling systems, and ash handling processes. Efficient recycling and ash water recovery systems were in place to conserve water.
+  </p>
+
+  <p class="text-gray-700 leading-relaxed mt-4">
+    <strong>Performance & Recognition:</strong> After NTPC took over, TTPS achieved remarkable improvements in availability, heat rate, and Plant Load Factor (PLF). It achieved over 90% PLF during several years and received national awards for best performance among thermal power stations. It was also recognized for its proactive safety and environment management practices.
+  </p>
+
+  <p class="text-gray-700 leading-relaxed mt-4">
+    <strong>Environmental Management:</strong> TTPS implemented Electrostatic Precipitators (ESPs) for dust control and maintained an ash utilization rate in compliance with MOEF guidelines. The fly ash generated was supplied to nearby cement and brick manufacturing industries.
+  </p>
+
+  <p class="text-gray-700 leading-relaxed mt-4">
+    <strong>Decommissioning:</strong> On March 31, 2021, NTPC decommissioned the plant after over 50 years of operation. The decision was part of NTPC’s broader strategy to retire aging, inefficient units and replace them with modern high-efficiency, low-emission units.
+  </p>
+
+  <p class="text-gray-700 leading-relaxed mt-4">
+    <strong>Future Development:</strong> NTPC has proposed setting up a new 1320 MW supercritical thermal power project (2 × 660 MW units) on the same site, which would generate more power with less coal consumption and emissions. The project is under environmental and governmental review.
+  </p>
+
+  <p class="text-gray-700 leading-relaxed mt-4">
+    <strong>Community & Legacy:</strong> TTPS was a major employment generator for the region, supporting thousands of families directly and indirectly. NTPC also contributed to local development through CSR activities like schools, hospitals, water supply, sanitation, and skill training. The legacy of TTPS continues to inspire India's transition from old to new power infrastructure.
+  </p>
+      </div>
+
+      <!-- Plant Card 3 -->
+      <div class="bg-white rounded-2xl shadow-xl p-6 animate-fade-in-up delay-200">
+        <h3 class="text-xl font-bold text-blue-800 mb-3">Mahanadi Coalfields Limited (MCL)</h3>
+         <div class="mt-6 text-center">
+    <img src="Mahandai Coalfield Limited.jpeg" alt="Talcher Mining Site" class="w-full max-h-80 object-cover rounded-lg shadow-md transition-transform duration-300 hover:scale-105">
+    <p class="text-sm text-gray-600 mt-2 italic">Mahanadi Coalfield Limited</p>
+  </div>
+        <p class="text-gray-700 leading-relaxed mt-4">
+    <strong>Overview:</strong> Mahanadi Coalfields Limited (MCL) is one of the eight subsidiaries of Coal India Limited (CIL), a Government of India enterprise under the Ministry of Coal. Established in 1992 after being carved out of South Eastern Coalfields Ltd (SECL), MCL is headquartered in Sambalpur, Odisha.
+  </p>
+
+  <p class="text-gray-700 leading-relaxed mt-4">
+    <strong>Operations:</strong> MCL operates primarily in Odisha, one of India's richest states in coal reserves. It manages multiple open-cast and underground coal mines across the Talcher and IB Valley Coalfields. The Talcher coalfield is especially crucial, supplying fuel to major power plants like NTPC Kaniha and Talcher Thermal.
+  </p>
+
+  <p class="text-gray-700 leading-relaxed mt-4">
+    <strong>Production:</strong> MCL is among the top coal-producing companies in India. It achieved an annual production of over 193 million tonnes in recent years. The coal mined here fuels thermal power plants in eastern, southern, and western India.
+  </p>
+
+  <p class="text-gray-700 leading-relaxed mt-4">
+    <strong>Major Mines:</strong> Notable mines operated by MCL include:
+    <ul class="list-disc ml-6 mt-2">
+      <li>Lingaraj Open Cast Project (OCP)</li>
+      <li>Bharatpur OCP</li>
+      <li>Jagannath Area</li>
+      <li>Kulda and Lakhanpur Mines (IB Valley)</li>
+    </ul>
+  </p>
+
+  <p class="text-gray-700 leading-relaxed mt-4">
+    <strong>Infrastructure & Transport:</strong> MCL has developed an extensive network of rail sidings, roadways, and conveyor systems to streamline coal transportation. Most of its coal is dispatched via Indian Railways to various power stations across the country.
+  </p>
+
+  <p class="text-gray-700 leading-relaxed mt-4">
+    <strong>Environmental Initiatives:</strong> MCL has implemented multiple green initiatives such as:
+    <ul class="list-disc ml-6 mt-2">
+      <li>Massive tree plantation and green belt development</li>
+      <li>Mechanized dust suppression and water sprinkling</li>
+      <li>Promoting eco-friendly mining techniques</li>
+    </ul>
+  </p>
+
+  <p class="text-gray-700 leading-relaxed mt-4">
+    <strong>CSR and Community Welfare:</strong> MCL is also active in Corporate Social Responsibility (CSR), funding hospitals, education, water supply, roads, and skill training programs in mining-affected areas. Its initiatives have significantly improved the quality of life for local communities in Angul, Jharsuguda, and Sambalpur districts.
+  </p>
+
+  <p class="text-gray-700 leading-relaxed mt-4">
+    <strong>Future Outlook:</strong> With plans to introduce advanced mining technologies, expand production capacity, and adopt sustainable practices, MCL is poised to remain a major contributor to India’s energy security and economic development.
+  </p>
+        </p>
+      </div>
+
+      <!-- Plant Card 4 -->
+      <div class="bg-white rounded-2xl shadow-xl p-6 animate-fade-in-up delay-300">
+        <h3 class="text-xl font-bold text-blue-800 mb-3">Talcher Fertilizer Plant (Upcoming)</h3>
+         <div class="mt-6 text-center">
+    <img src="Talcher Fertilizer Plant.jpeg" alt="Talcher Mining Site" class="w-full max-h-80 object-cover rounded-lg shadow-md transition-transform duration-300 hover:scale-105">
+    <p class="text-sm text-gray-600 mt-2 italic">Talcher Fertilizer Plant</p>
+  </div>
+        <p class="text-gray-700 leading-relaxed mt-4">
+    <strong>Overview:</strong> The Talcher Fertilizer Plant is a major upcoming urea production facility located in Talcher, Angul district, Odisha. Originally operated as the Talcher Unit of the Fertilizer Corporation of India (FCI), it was shut down in the early 2000s. The plant is now being revived as part of the Government of India's initiative to boost domestic urea production and reduce import dependency.
+  </p>
+
+  <p class="text-gray-700 leading-relaxed mt-4">
+    <strong>Project Revival:</strong> The revival of the Talcher plant is being carried out by **Talcher Fertilizers Limited (TFL)** — a joint venture of five public sector companies: GAIL (India) Ltd., RCF (Rashtriya Chemicals and Fertilizers), CIL (Coal India Ltd.), FCIL (Fertilizer Corporation of India), and HTAS Consortium. TFL aims to use coal gasification technology to produce urea from indigenous coal, making it a first-of-its-kind plant in India.
+  </p>
+
+  <p class="text-gray-700 leading-relaxed mt-4">
+    <strong>Technology:</strong> Unlike conventional fertilizer plants that use natural gas, the Talcher Fertilizer Plant will use a **coal gasification process** to convert coal into synthesis gas (syngas), which will then be used to produce ammonia and urea. The plant is expected to use around 2.5 million tonnes of coal annually.
+  </p>
+
+  <p class="text-gray-700 leading-relaxed mt-4">
+    <strong>Capacity:</strong> The revived facility will have a production capacity of approximately <strong>1.27 million metric tonnes of urea per annum</strong>. This will significantly contribute to India's urea production and enhance agricultural productivity.
+  </p>
+
+  <p class="text-gray-700 leading-relaxed mt-4">
+    <strong>Employment and Economic Impact:</strong> The project is expected to generate substantial direct and indirect employment for the region. It will also boost the local economy through infrastructure development, transportation demand, and support industries.
+  </p>
+
+  <p class="text-gray-700 leading-relaxed mt-4">
+    <strong>Environmental Considerations:</strong> While coal gasification is more eco-friendly compared to traditional coal burning, TFL has committed to adopting cleaner technologies, emission control systems, and strict adherence to environmental regulations to ensure sustainable operation.
+  </p>
+
+  <p class="text-gray-700 leading-relaxed mt-4">
+    <strong>Status:</strong> The foundation stone for the project was laid by the Prime Minister of India in 2018. As of now, civil construction and equipment installation are ongoing, with commissioning expected in the coming years. Once operational, it will be a landmark in India’s fertilizer and coal-to-chemicals industries.
+  </p>
+      </div>
+     <!-- plant card 5 -->
+     <div class="bg-white rounded-2xl shadow-xl p-6 animate-fade-in-up">
+      <h3 class="text-xl font-bold text-blue-800 mb-3">Heavy Water Plant, Talcher</h3>
+      <div class="mt-6 text-center">
+    <img src="Heavy Water Plant.jpeg" alt="Talcher Mining Site" class="w-full max-h-80 object-cover rounded-lg shadow-md transition-transform duration-300 hover:scale-105">
+    <p class="text-sm text-gray-600 mt-2 italic">Heavy Water Plant</p>
+  </div>
+      <p class="text-gray-700 mb-3">
+        The Heavy Water Plant in Talcher, located near Vikrampur, was established in 1985 by the Department of Atomic Energy (DAE), Government of India. It produced <strong>Heavy Water (D₂O)</strong> used in nuclear reactors as a coolant and moderator.
+      </p>
+      <p class="text-gray-700 mb-3">
+        It was India’s first coal-based hydrogen generation heavy water plant and played a key role in supporting the country’s nuclear energy program during its operational years.
+      </p>
+      <p class="text-gray-700">
+        Though <strong>decommissioned in 1994</strong> due to economic reasons, the plant is still preserved and maintained by the Heavy Water Board, marking Talcher's contribution to strategic and nuclear infrastructure.
+      </p>
+    </div>
+    </div>
+  </div>
+</section>
+<!-- Upcoming Plants & Economic Projects Section -->
+<section id="upcoming-projects" class="py-12 bg-gradient-to-b from-orange-400 to-yellow-300">
+  <div class="mx-auto px-4">
+    <h2 class="text-3xl md:text-4xl font-bold text-center text-white mb-8 animate-fade-in-up">Upcoming Plants & Economic Projects in Talcher</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+      <!-- Coal-to-Chemical Project -->
+      <div class="bg-white rounded-2xl shadow-xl p-6 animate-fade-in-up">
+        <h3 class="text-xl font-bold text-blue-800 mb-3">1. Coal-to-Chemical Plant</h3>
+        <p class="text-gray-700 leading-relaxed mt-4">
+    The Talcher Coal-to-Chemical Plant is a flagship project aimed at producing chemicals like methanol, ammonia, and urea from coal using advanced gasification technology. It supports India’s push for self-reliance in fertilizer and chemical production.
+  </p>
+
+  <p class="text-gray-700 leading-relaxed mt-4">
+    This plant uses **coal gasification**, a cleaner method compared to direct combustion, converting coal into synthesis gas (syngas), which is then processed into valuable chemicals.
+  </p>
+
+  <p class="text-gray-700 leading-relaxed mt-4">
+    Products include:
+    <ul class="list-disc ml-6 mt-2">
+      <li><strong>Methanol</strong> – For fuel and chemicals</li>
+      <li><strong>Ammonia & Urea</strong> – For fertilizers</li>
+    </ul>
+  </p>
+
+  <p class="text-gray-700 leading-relaxed mt-4">
+    The project enhances local employment, boosts the regional economy, and reduces dependence on imports while aligning with environmental goals through lower emissions and water reuse systems.
+  </p>
+      </div>
+
+      <!-- Solar Energy Park -->
+      <div class="bg-white rounded-2xl shadow-xl p-6 animate-fade-in-up delay-100">
+        <h3 class="text-xl font-bold text-blue-800 mb-3">2. Talcher Solar Park (Planned)</h3>
+          <div class="mt-6 text-center">
+    <img src="Solar Energy Park.jpeg" alt="Talcher Mining Site" class="w-full max-h-80 object-cover rounded-lg shadow-md transition-transform duration-300 hover:scale-105">
+    <p class="text-sm text-gray-600 mt-2 italic">Solar Energy Park </p>
+  </div>
+       <p class="text-gray-700 leading-relaxed mt-4">
+    <strong>NTPC Talcher Kaniha Solar PV Plant:</strong> Commissioned in 2014, NTPC's 10 MW solar photovoltaic plant at Talcher Kaniha spans approximately 45 acres, with installations near the Stage II area of the permanent township and adjacent to Pathermunda village. This project underscores NTPC's commitment to diversifying its energy portfolio with renewable sources.
+  </p>
+
+  <p class="text-gray-700 leading-relaxed mt-4">
+    <strong>Statewide Solar Initiatives:</strong> Under the Ministry of New and Renewable Energy's (MNRE) solar park scheme, Odisha has been allocated 1,000 MW for solar development. The Green Energy Development Corporation of Odisha (GEDCOL) is spearheading this initiative, identifying around 4,000 acres across districts like Balasore and Angul for potential solar park development.
+  </p>
+
+  <p class="text-gray-700 leading-relaxed mt-4">
+    <strong>Floating Solar Projects:</strong> Odisha is exploring the potential of floating solar power, aiming to generate approximately 1,000 MW from reservoirs such as Hirakud, Rengali, and Upper Indravati. This approach not only conserves land but also reduces water evaporation and enhances energy efficiency.
+  </p>
+      </div>
+
+      <!-- Industrial Corridor Inclusion -->
+      <div class="bg-white rounded-2xl shadow-xl p-6 animate-fade-in-up delay-200">
+        <h3 class="text-xl font-bold text-blue-800 mb-3">3. Inclusion in Odisha Economic Corridor</h3>
+        <p class="text-gray-700 leading-relaxed mt-4">
+    Talcher has been identified as a strategic node in the proposed <strong>Odisha Economic Corridor (OEC)</strong>, a key part of the East Coast Economic Corridor being developed by the Government of India in partnership with the Asian Development Bank (ADB). The corridor aims to enhance industrial development and infrastructure connectivity across eastern India.
+  </p>
+
+  <p class="text-gray-700 leading-relaxed mt-4">
+    As a major energy and resource hub with power plants, coal reserves, and upcoming chemical and fertilizer industries, Talcher plays a crucial role in the corridor's vision. The plan focuses on creating a well-integrated industrial ecosystem through improved road, rail, and logistics infrastructure.
+  </p>
+
+  <p class="text-gray-700 leading-relaxed mt-4">
+    The development is expected to attract investments, generate employment, and drive economic growth not just in Talcher, but across the Angul-Dhenkanal industrial belt. It also aligns with the broader goal of making Odisha a manufacturing and logistics powerhouse in eastern India.
+  </p>
+      </div>
+
+      <!-- MSME & Startup Hubs -->
+      <div class="bg-white rounded-2xl shadow-xl p-6 animate-fade-in-up delay-300">
+        <h3 class="text-xl font-bold text-blue-800 mb-3">4. MSME & Agro-Industry Hubs</h3>
+          <p class="text-gray-700 leading-relaxed mt-4">
+    The Talcher-Angul region is emerging as a promising zone for <strong>Micro, Small, and Medium Enterprises (MSMEs)</strong>, driven by the abundant availability of raw materials, improved connectivity, and government-backed industrial promotion schemes. These industries contribute to local employment and form a vital link in the supply chain for larger industrial units.
+  </p>
+
+  <p class="text-gray-700 leading-relaxed mt-4">
+    In addition to energy and mining, the area is being promoted for <strong>agro-based industries</strong> such as food processing, rice mills, and organic fertilizer units. The fertile land, access to water from the Brahmani River, and nearby farming communities make Talcher a strategic location for agro-industrial development.
+  </p>
+
+  <p class="text-gray-700 leading-relaxed mt-4">
+    Government initiatives under the Odisha MSME Policy and the PMEGP (Prime Minister's Employment Generation Programme) are supporting entrepreneurs through subsidies, infrastructure development, and skill training programs. Special focus is given to women-led and tribal enterprises to promote inclusive growth.
+  </p>
+
+  <p class="text-gray-700 leading-relaxed mt-4">
+    With better roads, upcoming logistics hubs, and power availability, Talcher is poised to become a vibrant cluster for MSMEs and agro-industries, complementing its identity as an energy and industrial powerhouse.
+  </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Contact Section -->
+<section class="py-16 px-4 bg-gradient-to-r from-orange-600 to-yellow-600" id="contact">
+  <h2 class="text-4xl font-bold text-center text-white mb-10">Contact <span class="text-yellow-300">Us</span></h2>
+  <div class="max-w-4xl mx-auto">
+    <div class="bg-white p-8 rounded-3xl shadow-xl hover:shadow-2xl hover:scale-[1.02] transition duration-300 text-center">
+      <p class="text-lg text-gray-800 font-semibold mb-4">We’d love to hear from you!</p>
+      <p class="text-md text-gray-700 mb-2">
+        Email: <a href="mailto:talcherbazar164@gmail.com" class="text-orange-600 hover:underline">talcherbazar164@gmail.com</a>
+      </p>
+      <p class="text-md text-gray-700">
+        Instagram: <a href="https://www.instagram.com/talcher_bazar?igsh=N3B2aDU5cmVwcDlm" target="_blank" class="text-orange-600 hover:underline">@talcher_bazar</a>
+      </p>
+    </div>
+  </div>
+</section>
+<footer>
+    <p>&copy; 2025 Chalo Talcher. All rights reserved.</p>
+  </footer>
+<script async src="//www.instagram.com/embed.js"></script>  <script>
+    function toggleMenu(icon) {
+      icon.classList.toggle('active');
+      document.getElementById('menu').classList.toggle('active');
+    }
+    
+    const slides = document.querySelectorAll('.slide');
+    const slidesContainer = document.getElementById('slides');
+    const dotsContainer = document.getElementById('dots');
+    let currentSlide = 0;
+
+    slides.forEach((_, idx) => {
+      const dot = document.createElement('div');
+      dot.classList.add('dot');
+      if (idx === 0) dot.classList.add('active');
+      dot.onclick = () => goToSlide(idx);
+      dotsContainer.appendChild(dot);
+    });
+
+    function showSlide(index) {
+      slidesContainer.style.transform = `translateX(-${index * 100}%)`;
+      document.querySelectorAll('.dot').forEach(dot => dot.classList.remove('active'));
+      document.querySelectorAll('.dot')[index].classList.add('active');
+    }
+
+    function nextSlide() {
+      currentSlide = (currentSlide + 1) % slides.length;
+      showSlide(currentSlide);
+    }
+
+    function prevSlide() {
+      currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+      showSlide(currentSlide);
+    }
+
+    function goToSlide(index) {
+      currentSlide = index;
+      showSlide(index);
+    }
+    !function(d,s,id){
+  var js,fjs=d.getElementsByTagName(s)[0];
+  if(!d.getElementById(id)){
+    js=d.createElement(s);js.id=id;
+    js.src='https://weatherwidget.io/js/widget.min.js';
+    fjs.parentNode.insertBefore(js,fjs);
+  }
+}(document,'script','weatherwidget-io-js');
+    async function fetchWeather() {
+    const lat = 20.9486;
+    const lon = 85.2206;
+    try {
+      const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&timezone=auto`;
+      const res = await fetch(url);
+      const data = await res.json();
+
+      const currentTemp = data.current_weather.temperature;
+      const code = data.current_weather.weathercode;
+      const hour = new Date().getHours();
+      const isNight = hour < 6 || hour >= 18;
+
+
+      document.getElementById("temp").innerHTML = `${currentTemp.toFixed(1)}°C `;
+    } catch (err) {
+      document.getElementById("temp").innerHTML = "Unable to fetch weather.";
+      console.error(err);
+    }
+  }
+
+    fetchWeather();
+    setInterval(nextSlide, 6000);
+  </script>
+<script async src="//www.instagram.com/embed.js"></script></body>
+</html>
